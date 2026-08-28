@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { PageTransition } from "@/components/site/PageTransition";
+import { FlamengoBackground } from "@/components/site/FlamengoBackground";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -37,9 +38,10 @@ function Header() {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${playfair.variable}`}>
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} min-h-screen flex flex-col relative`}>
+        <FlamengoBackground />
         <Header />
-        <main className="flex-1">
+        <main className="flex-1 relative">
           <PageTransition>{children}</PageTransition>
         </main>
         <footer className="border-t bg-white py-6 text-center text-xs leading-relaxed text-zinc-500">

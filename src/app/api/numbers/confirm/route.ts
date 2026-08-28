@@ -37,8 +37,33 @@ export async function POST(req: NextRequest) {
     await prisma.work.update({ where: { id: work.id }, data: { issuedCount: { increment: 1 } } });
     await prisma.auditLog.create({ data: { action: "NUMBER_PAID", entity: "Edition", entityId: edition.id, metadata: { numero, workSlug, paymentId } as any } });
 
-    // incrementa contador real (para /obra mostrar 2/1000 etc.)
-    return NextResponse.json({ ok: true, status: "pago", cor: "vermelho", numero, editionCode: updated.editionCode, mensagem: `Pagamento confirmado! Número ${numero} é seu.` });
+    // gera PDF personalizado + QR + certificado (assíncrono, não bloqueia resposta)
+    try {
+      const { generatePersonalizedPdf } = await import("@/lib/pdf");
+      const { sendEmail, renderOrderConfirmedEmail } = await import("@/lib/email");
+      const { buildVerifyUrl } = await import("@/lib/qr");
+      const club = await prisma.club.findUnique({ where: { id: work.clubId } });
+      const { key } = await generatePersonalizedPdf({
+        workTitle: work.title,
+        editionNumber: numero,
+        maxSupply: work.maxSupply,
+        editionCode: updated.editionCode,
+        clubName: club?.name || "Flamengo",
+      });
+      await prisma.edition.update({ where: { id: updated.id }, data: { personalizedPdfUrl: key } });
+      const verifyUrl = buildVerifyUrl(updated.editionCode);
+      const emailHtml = renderOrderConfirmedEmail({ editionCode: updated.editionCode, numero, workTitle: work.title, verifyUrl });
+      if (edition.reservedBy) await sendEmail({ to: edition.reservedBy, subject: emailHtml.subject, html: emailHtml.html });
+      await prisma.certificate.upsert({
+        where: { editionId: updated.id },
+        update: { certificateUrl: key, data: { editionCode: updated.editionCode, numero, workTitle: work.title, verifyUrl } as any },
+        create: { editionId: updated.id, certificateUrl: key, data: { editionCode: updated.editionCode, numero, workTitle: work.title, verifyUrl } as any },
+      });
+    } catch (e) {
+      console.error("pdf/email fail (não bloqueia pagamento)", e);
+    }
+
+    return NextResponse.json({ ok: true, status: "pago", cor: "vermelho", numero, editionCode: updated.editionCode, mensagem: `Pagamento confirmado! Número ${numero} é seu. PDF e certificado gerados.` });
   } catch (e: any) {
     if (String(e).includes("Can't reach database")) {
       return NextResponse.json({ ok: true, mock: true, status: "pago", numero, mensagem: "Mock: pagamento confirmado (GH Pages)" });

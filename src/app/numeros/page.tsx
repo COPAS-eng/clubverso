@@ -25,6 +25,7 @@ export default function NumerosPage() {
   const [stats, setStats] = useState({ disponiveis: work.maxSupply, reservados: 0, pagos: 0, total: work.maxSupply });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const timerRef = useRef<any>(null);
 
   async function fetchNumbers() {
@@ -161,10 +162,15 @@ export default function NumerosPage() {
       const data = await r.json();
       if (!r.ok) throw new Error(data.error);
       setMsg(data.mensagem);
+      // busca URL de download presigned (15min)
+      try {
+        const dl = await fetch(`/api/editions/download?code=${data.editionCode || reserva.editionCode}`);
+        const dlData = await dl.json();
+        if (dlData.url) setDownloadUrl(dlData.url);
+      } catch {}
       setReserva(null);
-      // mock GH: atualiza localStorage para pago
       const cur = nums.map((n) => (n.numero === reserva.numero ? { ...n, status: "pago", cor: "vermelho" } : n));
-      localStorage.setItem("clubverso_mock_numbers", JSON.stringify(cur));
+      try { localStorage.setItem("clubverso_mock_numbers", JSON.stringify(cur)); } catch {}
       setNums(cur as any);
       fetchNumbers();
     } catch (e: any) {
@@ -229,7 +235,7 @@ export default function NumerosPage() {
         </div>
       </Card>
 
-      {msg && <div className="mt-3 text-sm bg-amber-50 border border-amber-200 rounded-xl p-3">{msg}</div>}
+      {msg && <div className="mt-3 text-sm bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-center justify-between gap-3">{msg} {downloadUrl && <a href={downloadUrl} target="_blank" className="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">Baixar PDF</a>}</div>}
 
       {/* grid */}
       <div className="mt-4 grid grid-cols-5 sm:grid-cols-10 md:grid-cols-12 lg:grid-cols-16 gap-2">
