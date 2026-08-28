@@ -87,12 +87,17 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
             </span>
           </div>
           <div className="mt-4 flex flex-col gap-2">
+            <a href="https://pay.kiwify.com.br/vcv1jN8" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="w-full text-base shine bg-[#C3281E] hover:bg-[#9F1F18]">
+                COMPRAR AGORA • {formatBRL(work.priceCents)} — Kiwify PIX
+              </Button>
+            </a>
             <Link href={`/checkout?work=${work.slug}`}>
-              <Button size="lg" className="w-full text-base shine">
-                COMPRAR EDIÇÃO SEQUENCIAL • {formatBRL(work.priceCents)}
+              <Button variant="outline" className="w-full">
+                Checkout interno (PIX mock) • {formatBRL(work.priceCents)}
               </Button>
             </Link>
-            <div className="text-center text-xs text-zinc-500">Venda sequencial: após 1 é o 2, depois 3... • 1/10000 • 9.999 disponíveis</div>
+            <div className="text-center text-xs text-zinc-500">Venda sequencial: após 1 é o 2, depois 3... • 1/10000 • 9.999 disponíveis • Pagamento oficial Kiwify</div>
             <div className="text-center text-xs text-zinc-500">PIX • QR + Copia e Cola • Certificado + QR de autenticidade • NFT opcional</div>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-center">
