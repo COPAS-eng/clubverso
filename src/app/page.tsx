@@ -57,13 +57,13 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={item} className="mt-6 flex flex-wrap gap-3">
-              <Link href="/clubes/flamengo">
+              <Link href="/numeros">
                 <Button size="lg" className="shine group">
-                  Escolha seu clube <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  Escolher meu número 1–1000 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </Link>
-              <Link href="/obra/flamengo-1895-2026">
-                <Button variant="outline" size="lg" className="bg-white text-zinc-900 hover:bg-zinc-100 border-white">
+              <Link href="/clubes/flamengo">
+                <Button variant="outline" size="lg" className="bg-white/10 text-white hover:bg-white hover:text-zinc-900 border-white/30 backdrop-blur">
                   Ver obra Flamengo
                 </Button>
               </Link>

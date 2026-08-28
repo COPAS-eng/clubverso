@@ -87,14 +87,14 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
             </span>
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            <Link href={`/checkout?work=${work.slug}`}>
+            <Link href="/numeros">
               <Button size="lg" className="w-full text-base shine">
-                COMPRAR POR {formatBRL(work.priceCents)}
+                ESCOLHER NÚMERO 1–{work.maxSupply} • COMPRAR POR {formatBRL(work.priceCents)}
               </Button>
             </Link>
-            <Link href={`/checkout?work=${work.slug}&second=palmeiras`}>
+            <Link href={`/checkout?work=${work.slug}`}>
               <Button variant="outline" className="w-full">
-                LEVE 2ª EDIÇÃO POR {formatBRL(work.secondPriceCents)}
+                COMPRAR RÁPIDO POR {formatBRL(work.priceCents)}
               </Button>
             </Link>
             <div className="text-center text-xs text-zinc-500">PIX • QR + Copia e Cola • Certificado + QR de autenticidade • NFT opcional</div>

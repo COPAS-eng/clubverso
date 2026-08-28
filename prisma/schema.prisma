@@ -134,10 +134,12 @@ model WorkPage {
   @@index([workId])
 }
 
-// ─── Edição numerada ───────────────────────────────────────────────────────
+// ─── Edição numerada + reserva 5min ─────────────────────────────────────────
 
 enum EditionStatus {
+  AVAILABLE
   RESERVED
+  PAID
   ASSIGNED
   DELIVERED
   GIFTED
@@ -147,13 +149,19 @@ model Edition {
   id                 String        @id @default(cuid())
   workId             String
   work               Work          @relation(fields: [workId], references: [id])
-  editionNumber      Int // 1..10000
+  editionNumber      Int // 1..1000
   editionCode        String        @unique // FLA-2026-DIG-00001
   ownerId            String?
   owner              User?         @relation(fields: [ownerId], references: [id])
   orderItemId        String?       @unique
   orderItem          OrderItem?    @relation(fields: [orderItemId], references: [id])
   status             EditionStatus @default(ASSIGNED)
+  // Reserva temporária 5min
+  reservedAt         DateTime?
+  expiresAt          DateTime?
+  reservedBy         String? // email
+  paymentId          String?       @unique
+  paymentConfirmed   Boolean       @default(false)
   qrCodeUrl          String?
   personalizedPdfUrl String?
   certificate        Certificate?
@@ -165,6 +173,8 @@ model Edition {
   @@unique([workId, editionNumber])
   @@index([workId, status])
   @@index([ownerId])
+  @@index([status, expiresAt])
+  @@index([reservedBy])
 }
 
 // ─── Pedido & pagamento ────────────────────────────────────────────────────
