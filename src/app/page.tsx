@@ -13,11 +13,11 @@ import { assetPath } from "@/lib/utils";
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.18 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 18 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const, type: "spring" as const, stiffness: 90, damping: 14 } },
 };
 
 export default function Home() {
@@ -196,7 +196,7 @@ export default function Home() {
 
         <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="mt-6 grid md:grid-cols-3 gap-3">
           {[
-            { t: "Escassez verdadeira", d: `${work.issued} / ${work.maxSupply} • ${available} disponíveis. Contador real reiniciado 1/1000.`, icon: Trophy },
+            { t: "Escassez verdadeira", d: `${work.issued} / ${work.maxSupply} • ${available} disponíveis. Contador real reiniciado 1/10000.`, icon: Trophy },
             { t: "Autenticidade", d: "Código FLA-2026-DIG-xxxxx, certificado e QR em /verificar/[code]. Camada permanente CLUBEVERSO.", icon: ShieldCheck },
             { t: "PIX + Presente", d: "Webhook HMAC idempotente. Segunda edição R$39,90 pode ser presenteada por e-mail.", icon: Zap },
           ].map((f) => (

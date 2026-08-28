@@ -115,7 +115,7 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
           </div>
           <div className="mt-3 flex items-center gap-2 text-xs text-zinc-500">
             <img src={assetPath(club.shield)} alt={club.name} className="h-6 w-auto bg-white border rounded-lg p-0.5" />
-            Obra com escudo oficial • Tiragem reiniciada 1/1000
+            Obra com escudo oficial • Tiragem reiniciada 1/10000
           </div>
         </div>
       </div>

@@ -57,7 +57,7 @@ async function main() {
       title: "Flamengo — 1895–2026", subtitle: "Da origem náutica ao clube do povo. 25 páginas originais.",
       description: "Obra HQ premium que conta a evolução do Flamengo desde 1895 até 2026: origem náutica, consolidação no futebol (1911), eras, ídolos, conquistas e torcida. Fechamento editorial em 28/08/2026.",
       periodStart: 1895, periodEnd: 2026, version: "FLA-2026-V1",
-      maxSupply: 1000, priceCents: 4990, secondPriceCents: 3990,
+      maxSupply: 10000, priceCents: 4990, secondPriceCents: 3990,
       status: "PUBLISHED", editorialClosedAt: new Date("2026-08-28"),
       totalPages: 25,
     },

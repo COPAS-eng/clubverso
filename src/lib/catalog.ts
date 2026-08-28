@@ -1,4 +1,4 @@
-// Mock catalog — local shields em /public/shields (confiável, sem 404 externo) + contador reiniciado 1/1000
+// Mock catalog — local shields em /public/shields (confiável, sem 404 externo) + contador reiniciado 1/10000
 export const MOCK_CATALOG = {
   continents: [{ slug: "america-do-sul", name: "América do Sul" }],
   countries: [{ slug: "brasil", name: "Brasil", continentSlug: "america-do-sul", flag: "🇧🇷" }],
@@ -120,7 +120,7 @@ export const MOCK_CATALOG = {
       periodStart: 1895,
       periodEnd: 2026,
       version: "FLA-2026-V1",
-      maxSupply: 1000,
+      maxSupply: 10000,
       issued: 1,
       priceCents: 4990,
       secondPriceCents: 3990,

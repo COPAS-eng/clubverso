@@ -18,7 +18,7 @@ export default function AdminPage() {
               <div className="text-2xl font-black">{work.issued} / {work.maxSupply}</div>
             </div>
           </div>
-          <div className="text-xs text-emerald-600 font-semibold">{work.maxSupply - work.issued} disponíveis • Reiniciado 1/1000</div>
+          <div className="text-xs text-emerald-600 font-semibold">{work.maxSupply - work.issued} disponíveis • Reiniciado 1/10000</div>
           <div className="mt-2 w-full h-2 rounded-full bg-zinc-100 overflow-hidden">
             <div className="h-full bg-[#C3281E]" style={{ width: `${(work.issued / work.maxSupply) * 100}%` }} />
           </div>

@@ -29,19 +29,26 @@ export function ClubShield({
   const resolvedSrc = withBasePath(src);
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, rotate: -8, scale: 0.9 }}
+      initial={{ opacity: 0, y: 22, rotate: -6, scale: 0.92 }}
       animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -4, scale: 1.03, transition: { duration: 0.2 } }}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1], type: "spring", stiffness: 90, damping: 14 }}
+      whileHover={{ y: -6, scale: 1.05, rotate: 1.5, transition: { type: "spring", stiffness: 400, damping: 12 } }}
+      whileTap={{ scale: 0.98 }}
       className="relative flex items-center justify-center"
       style={{ width: size, height: size }}
     >
-      {/* glow */}
+      {/* glow premium */}
       <motion.div
-        className="absolute inset-0 rounded-[20%] blur-2xl opacity-30"
-        style={{ background: primaryColor }}
-        animate={{ scale: [1, 1.08, 1], opacity: [0.25, 0.4, 0.25] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0 rounded-[20%] blur-2xl"
+        style={{ background: `radial-gradient(60% 60% at 50% 50%, ${primaryColor}55, transparent 70%)` }}
+        animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute inset-[10%] rounded-[20%] blur-xl"
+        style={{ background: `${primaryColor}22` }}
+        animate={{ scale: [1.12, 1, 1.12], opacity: [0.2, 0.35, 0.2] }}
+        transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
       />
       {/* card */}
       <div className="relative w-full h-full rounded-[18%] bg-white border border-zinc-200 shadow-[0_8px_30px_rgba(0,0,0,0.12),0_1px_3px_rgba(0,0,0,0.08)] p-[12%] flex items-center justify-center overflow-hidden">

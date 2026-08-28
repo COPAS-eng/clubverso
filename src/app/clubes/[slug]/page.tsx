@@ -74,7 +74,7 @@ export default function ClubPage({ params }: { params: { slug: string } }) {
                 <div className="text-xs text-zinc-500">{club.city} • Fundado em {club.founded}</div>
               </div>
             </div>
-            <div className="mt-3 text-xs leading-relaxed text-zinc-600">{work ? `${work.issued} / ${work.maxSupply} • ${work.maxSupply - work.issued} disponíveis` : "em breve"} • Tiragem reiniciada 1/1000.</div>
+            <div className="mt-3 text-xs leading-relaxed text-zinc-600">{work ? `${work.issued} / ${work.maxSupply} • ${work.maxSupply - work.issued} disponíveis` : "em breve"} • Tiragem reiniciada 1/10000.</div>
           </Card>
         </div>
       </div>
