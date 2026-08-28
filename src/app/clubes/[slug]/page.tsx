@@ -4,35 +4,43 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { formatBRL } from "@/lib/pricing";
+import { ClubShield } from "@/components/site/ClubShield";
 
 export function generateStaticParams() {
-  return [{ slug: "flamengo" }, { slug: "palmeiras" }];
+  return MOCK_CATALOG.clubs.map((c) => ({ slug: c.slug }));
 }
+
 export default function ClubPage({ params }: { params: { slug: string } }) {
   const club = getClub(params.slug);
   if (!club) return <div className="mx-auto max-w-6xl px-4 py-12">Clube não encontrado. <Link href="/" className="underline">Voltar</Link></div>;
   const work = getWorkByClub(club.slug);
-  const isFlamengo = club.slug === "flamengo";
   return (
     <div>
-      <div className="text-white py-10" style={{ background: `linear-gradient(135deg, ${club.primaryColor} 0%, ${club.secondaryColor} 100%)` }}>
-        <div className="mx-auto max-w-6xl px-4">
-          <Badge className="bg-white/20 text-white border-white/30">BRASIL • BRASILEIRÃO • {club.shortCode}</Badge>
-          <h1 className="mt-2 text-4xl font-black" style={{ fontFamily: "var(--font-playfair)" }}>{club.name}</h1>
-          <p className="text-white/80 text-sm mt-1">Página do clube com identidade própria • {isFlamengo ? "Textura histórica + elementos náuticos + Rio" : "Em breve"}</p>
-          <div className="mt-3 text-xs bg-black/20 inline-block px-3 py-1 rounded-full">Status de licenciamento: {club.licensingStatus} • Conteúdo editorial independente</div>
+      <div className="relative overflow-hidden text-white py-10" style={{ background: `linear-gradient(135deg, ${club.primaryColor} 0%, #0a0a0a 78%)` }}>
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "22px 22px" }} />
+        <div className="relative mx-auto max-w-6xl px-4 flex gap-6 items-center">
+          <ClubShield src={club.shield} alt={club.name} size={110} primaryColor={club.primaryColor} />
+          <div>
+            <Badge className="bg-white/15 text-white border-white/20 backdrop-blur">BRASIL • BRASILEIRÃO • {club.shortCode} • {club.city} • {club.founded}</Badge>
+            <h1 className="mt-2 text-4xl font-black tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>{club.name}</h1>
+            <p className="text-white/80 text-sm mt-1 max-w-xl">Identidade própria com escudo oficial. Conteúdo editorial independente, sem selo oficial sem licenciamento.</p>
+            <div className="mt-3 text-xs bg-black/20 inline-block px-3 py-1 rounded-full border border-white/10">Licenciamento: {club.licensingStatus}</div>
+          </div>
         </div>
       </div>
+
       <div className="mx-auto max-w-6xl px-4 py-8 grid md:grid-cols-3 gap-6">
         <div className="md:col-span-2">
-          <h2 className="font-bold">Obras</h2>
+          <h2 className="font-black">Obras</h2>
           {work ? (
-            <Card className="mt-3 overflow-hidden">
-              <div className="h-40 flex items-center justify-center text-white" style={{ background: club.primaryColor }}>
-                <div className="text-center"><div className="text-3xl font-black">{club.shortCode} — 1895–2026</div><div className="text-xs opacity-70">25 PÁGINAS • EDIÇÃO LIMITADA</div></div>
+            <Card className="mt-3 overflow-hidden shine group">
+              <div className="h-44 flex items-center justify-center text-white relative overflow-hidden" style={{ background: club.primaryColor }}>
+                <div className="absolute inset-0 opacity-15" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+                <img src={club.shield} alt={club.name} className="relative h-20 w-auto bg-white rounded-[12%] p-2 shadow-xl group-hover:scale-[1.03] transition duration-300" />
+                <span className="absolute bottom-3 text-xs tracking-[0.24em] opacity-80">25 PÁGINAS • EDIÇÃO LIMITADA</span>
               </div>
               <CardContent className="p-4">
-                <div className="font-bold">{work.title}</div>
+                <div className="font-black">{work.title}</div>
                 <div className="text-sm text-zinc-600">{work.description}</div>
                 <div className="mt-3 flex gap-2">
                   <Link href={`/obra/${work.slug}`}><Button>Ver obra • {formatBRL(work.priceCents)}</Button></Link>
@@ -43,12 +51,29 @@ export default function ClubPage({ params }: { params: { slug: string } }) {
           ) : (
             <Card className="mt-3 p-6 text-sm text-zinc-500">Obra em produção. Pipeline: Pesquisa → Roteiro 25 págs → Ilustrações originais → Revisão → Publicação.</Card>
           )}
+
+          <div className="mt-6">
+            <h3 className="font-bold text-sm">Outros clubes do Brasileirão</h3>
+            <div className="mt-3 grid grid-cols-4 sm:grid-cols-8 gap-2">
+              {MOCK_CATALOG.clubs.map((c) => (
+                <Link key={c.slug} href={`/clubes/${c.slug}`} className={`rounded-2xl border p-2 flex flex-col items-center gap-1.5 hover:shadow hover:-translate-y-0.5 transition ${c.slug === club.slug ? "bg-zinc-900 text-white border-zinc-900" : "bg-white"}`}>
+                  <img src={c.shield} alt={c.name} className="h-9 w-auto object-contain bg-white rounded-lg p-1" />
+                  <span className="text-[10px] font-bold">{c.shortCode}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
         <div>
           <Card className="p-4">
-            <div className="font-bold text-sm">Sobre o clube</div>
-            <div className="text-xs text-zinc-500 mt-1">{isFlamengo ? "Fundado em 1895 para remo, consolidação no futebol a partir de 1911, identidade rubro-negra e maior torcida do Brasil." : "História em curadoria. 25 capítulos cobrindo origem, eras de ouro, ídolos e torcida."}</div>
-            <div className="mt-3 text-xs">Disponíveis: {work ? (work.maxSupply - work.issued).toLocaleString("pt-BR") + " / " + work.maxSupply.toLocaleString("pt-BR") : "—"}</div>
+            <div className="flex items-center gap-3">
+              <img src={club.shield} alt={club.name} className="h-10 w-auto bg-white border rounded-xl p-1" />
+              <div>
+                <div className="font-bold text-sm">{club.name}</div>
+                <div className="text-xs text-zinc-500">{club.city} • Fundado em {club.founded}</div>
+              </div>
+            </div>
+            <div className="mt-3 text-xs leading-relaxed text-zinc-600">Disponíveis: {work ? `${(work.maxSupply - work.issued).toLocaleString("pt-BR")} / ${work.maxSupply.toLocaleString("pt-BR")}` : "em breve"}.</div>
           </Card>
         </div>
       </div>

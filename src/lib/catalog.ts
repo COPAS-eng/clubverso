@@ -4,8 +4,110 @@ export const MOCK_CATALOG = {
   countries: [{ slug: "brasil", name: "Brasil", continentSlug: "america-do-sul", flag: "🇧🇷" }],
   leagues: [{ slug: "brasileirao", name: "Brasileirão Série A", countrySlug: "brasil" }],
   clubs: [
-    { slug: "flamengo", name: "Flamengo", shortCode: "FLA", leagueSlug: "brasileirao", countrySlug: "brasil", primaryColor: "#C3281E", secondaryColor: "#000000", licensingStatus: "NOT_VERIFIED" as const },
-    { slug: "palmeiras", name: "Palmeiras", shortCode: "PAL", leagueSlug: "brasileirao", countrySlug: "brasil", primaryColor: "#006437", secondaryColor: "#FFFFFF", licensingStatus: "NOT_VERIFIED" as const },
+    {
+      slug: "flamengo",
+      name: "Flamengo",
+      shortCode: "FLA",
+      leagueSlug: "brasileirao",
+      countrySlug: "brasil",
+      primaryColor: "#C3281E",
+      secondaryColor: "#000000",
+      licensingStatus: "NOT_VERIFIED" as const,
+      shield: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Flamengo_braz_logo.svg",
+      city: "Rio de Janeiro",
+      founded: 1895,
+    },
+    {
+      slug: "palmeiras",
+      name: "Palmeiras",
+      shortCode: "PAL",
+      leagueSlug: "brasileirao",
+      countrySlug: "brasil",
+      primaryColor: "#006437",
+      secondaryColor: "#FFFFFF",
+      licensingStatus: "NOT_VERIFIED" as const,
+      shield: "https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg",
+      city: "São Paulo",
+      founded: 1914,
+    },
+    {
+      slug: "corinthians",
+      name: "Corinthians",
+      shortCode: "COR",
+      leagueSlug: "brasileirao",
+      countrySlug: "brasil",
+      primaryColor: "#000000",
+      secondaryColor: "#FFFFFF",
+      licensingStatus: "NOT_VERIFIED" as const,
+      shield: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Corinthians.png",
+      city: "São Paulo",
+      founded: 1910,
+    },
+    {
+      slug: "sao-paulo",
+      name: "São Paulo",
+      shortCode: "SAO",
+      leagueSlug: "brasileirao",
+      countrySlug: "brasil",
+      primaryColor: "#FE0000",
+      secondaryColor: "#000000",
+      licensingStatus: "NOT_VERIFIED" as const,
+      shield: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Brasao_do_Sao_Paulo_Futebol_Clube.svg",
+      city: "São Paulo",
+      founded: 1930,
+    },
+    {
+      slug: "santos",
+      name: "Santos",
+      shortCode: "SAN",
+      leagueSlug: "brasileirao",
+      countrySlug: "brasil",
+      primaryColor: "#FFFFFF",
+      secondaryColor: "#000000",
+      licensingStatus: "NOT_VERIFIED" as const,
+      shield: "https://upload.wikimedia.org/wikipedia/commons/1/15/Santos_Logo.png",
+      city: "Santos",
+      founded: 1912,
+    },
+    {
+      slug: "vasco",
+      name: "Vasco da Gama",
+      shortCode: "VAS",
+      leagueSlug: "brasileirao",
+      countrySlug: "brasil",
+      primaryColor: "#000000",
+      secondaryColor: "#FFFFFF",
+      licensingStatus: "NOT_VERIFIED" as const,
+      shield: "https://upload.wikimedia.org/wikipedia/commons/a/ac/CRVascodaGama.svg",
+      city: "Rio de Janeiro",
+      founded: 1898,
+    },
+    {
+      slug: "cruzeiro",
+      name: "Cruzeiro",
+      shortCode: "CRU",
+      leagueSlug: "brasileirao",
+      countrySlug: "brasil",
+      primaryColor: "#003399",
+      secondaryColor: "#FFFFFF",
+      licensingStatus: "NOT_VERIFIED" as const,
+      shield: "https://upload.wikimedia.org/wikipedia/commons/9/90/Cruzeiro_Esporte_Clube_%28logo%29.svg",
+      city: "Belo Horizonte",
+      founded: 1921,
+    },
+    {
+      slug: "gremio",
+      name: "Grêmio",
+      shortCode: "GRE",
+      leagueSlug: "brasileirao",
+      countrySlug: "brasil",
+      primaryColor: "#0099DD",
+      secondaryColor: "#000000",
+      licensingStatus: "NOT_VERIFIED" as const,
+      shield: "https://upload.wikimedia.org/wikipedia/commons/0/08/Gremio_logo.svg",
+      city: "Porto Alegre",
+      founded: 1903,
+    },
   ],
   works: [
     {
@@ -13,7 +115,8 @@ export const MOCK_CATALOG = {
       clubSlug: "flamengo",
       title: "Flamengo — 1895–2026",
       subtitle: "A história em 25 páginas. Da origem náutica ao clube do povo.",
-      description: "Da fundação em 1895 no Rio de Janeiro à era moderna, a trajetória rubro-negra contada em HQ premium com 25 capítulos ilustrados.",
+      description:
+        "Da fundação em 1895 no Rio de Janeiro à era moderna, a trajetória rubro-negra contada em HQ premium com 25 capítulos ilustrados.",
       periodStart: 1895,
       periodEnd: 2026,
       version: "FLA-2026-V1",
@@ -29,6 +132,12 @@ export const MOCK_CATALOG = {
   ],
 };
 
-export function getClub(slug: string) { return MOCK_CATALOG.clubs.find(c => c.slug === slug) || null; }
-export function getWork(slug: string) { return MOCK_CATALOG.works.find(w => w.slug === slug) || null; }
-export function getWorkByClub(clubSlug: string) { return MOCK_CATALOG.works.find(w => w.clubSlug === clubSlug) || null; }
+export function getClub(slug: string) {
+  return MOCK_CATALOG.clubs.find((c) => c.slug === slug) || null;
+}
+export function getWork(slug: string) {
+  return MOCK_CATALOG.works.find((w) => w.slug === slug) || null;
+}
+export function getWorkByClub(clubSlug: string) {
+  return MOCK_CATALOG.works.find((w) => w.clubSlug === clubSlug) || null;
+}

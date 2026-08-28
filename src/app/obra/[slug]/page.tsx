@@ -4,9 +4,34 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { formatBRL } from "@/lib/pricing";
+import { ClubShield } from "@/components/site/ClubShield";
 
 const PAGES = [
-  "Origem — 1895, remo e Rio","Primeiros anos","Consolidação no futebol — 1911","Primeiros grandes momentos","Crescimento","Formação da identidade","Primeira grande geração","Ascensão","Primeiro grande marco","Grande conquista","Era de ouro — Zico","Transição","Nova geração","Reconstrução","Grande momento moderno — Libertadores 1981","Capítulo histórico de destaque","Continuidade","Nova grande conquista — 2019","Desafios","Nova fase","Grande momento recente","Ano de fechamento — 2026","Ídolos e legado","Torcida, cultura e identidade","Encerramento + autenticação"
+  "Origem — 1895, remo e Rio",
+  "Primeiros anos",
+  "Consolidação no futebol — 1911",
+  "Primeiros grandes momentos",
+  "Crescimento",
+  "Formação da identidade",
+  "Primeira grande geração",
+  "Ascensão",
+  "Primeiro grande marco",
+  "Grande conquista",
+  "Era de ouro — Zico",
+  "Transição",
+  "Nova geração",
+  "Reconstrução",
+  "Grande momento moderno — Libertadores 1981",
+  "Capítulo histórico de destaque",
+  "Continuidade",
+  "Nova grande conquista — 2019",
+  "Desafios",
+  "Nova fase",
+  "Grande momento recente",
+  "Ano de fechamento — 2026",
+  "Ídolos e legado",
+  "Torcida, cultura e identidade",
+  "Encerramento + autenticação",
 ];
 
 export function generateStaticParams() {
@@ -15,50 +40,98 @@ export function generateStaticParams() {
 export default function ObraPage({ params }: { params: { slug: string } }) {
   const work = getWork(params.slug);
   if (!work) return <div className="mx-auto max-w-6xl px-4 py-12">Obra não encontrada.</div>;
-  const club = MOCK_CATALOG.clubs.find(c => c.slug === work.clubSlug)!;
+  const club = MOCK_CATALOG.clubs.find((c) => c.slug === work.clubSlug)!;
   const available = work.maxSupply - work.issued;
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="overflow-hidden">
-          <div className="h-72 flex items-center justify-center text-white" style={{ background: club.primaryColor }}>
-            <div className="text-center p-4"><div className="text-4xl font-black">{work.title}</div><div className="text-xs tracking-widest opacity-70 mt-1">25 PÁGINAS • HQ PREMIUM • ILUSTRAÇÕES ORIGINAIS</div><div className="mt-3 text-xs bg-white/20 px-3 py-1 rounded-full inline-block">Edição limitada {work.maxSupply.toLocaleString("pt-BR")} • {available.toLocaleString("pt-BR")} disponíveis</div></div>
+      <div className="grid lg:grid-cols-2 gap-6">
+        <Card className="overflow-hidden shine">
+          <div className="relative h-[340px] flex flex-col items-center justify-center text-white overflow-hidden" style={{ background: `linear-gradient(135deg, ${club.primaryColor} 0%, #0a0a0a 80%)` }}>
+            <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "22px 22px" }} />
+            <div className="absolute top-4 left-4 right-4 flex justify-between text-[10px] tracking-widest opacity-70">
+              <span>CLUBEVERSO • EDIÇÃO LIMITADA</span>
+              <span>{work.version}</span>
+            </div>
+            <ClubShield src={club.shield} alt={club.name} size={120} primaryColor={club.primaryColor} />
+            <div className="relative mt-4 text-center">
+              <div className="text-2xl font-black tracking-tight">{work.title}</div>
+              <div className="text-xs tracking-[0.22em] opacity-70 mt-1">25 PÁGINAS • HQ PREMIUM • ILUSTRAÇÕES ORIGINAIS</div>
+              <div className="mt-3 text-xs bg-white/15 border border-white/20 px-3 py-1 rounded-full inline-block backdrop-blur">
+                {available.toLocaleString("pt-BR")} / {work.maxSupply.toLocaleString("pt-BR")} disponíveis
+              </div>
+            </div>
+            <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
           </div>
-          <CardContent className="p-4 text-xs text-zinc-500">Capa ilustrada original (sem foto com direitos). Fechamento editorial: {work.editorialClosedAt} • Versão {work.version}</CardContent>
+          <CardContent className="p-4 flex items-center justify-between text-xs text-zinc-500">
+            <span>Fechamento editorial: {work.editorialClosedAt} • {work.version}</span>
+            <span className="flex items-center gap-1.5">
+              <img src={club.shield} alt={club.name} className="h-5 w-auto" /> {club.name}
+            </span>
+          </CardContent>
         </Card>
         <div>
           <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200">{available.toLocaleString("pt-BR")} / {work.maxSupply.toLocaleString("pt-BR")} DISPONÍVEIS</Badge>
-          <h1 className="text-3xl font-black mt-2" style={{ fontFamily: "var(--font-playfair)" }}>{work.title}</h1>
+          <h1 className="text-3xl font-black mt-2 tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>
+            {work.title}
+          </h1>
           <p className="text-zinc-600 mt-2">{work.subtitle}</p>
-          <p className="text-sm text-zinc-500 mt-2">{work.description}</p>
+          <p className="text-sm text-zinc-500 mt-2 leading-relaxed">{work.description}</p>
           <div className="mt-4 flex items-baseline gap-3">
-            <span className="text-3xl font-black text-[#C3281E]">{formatBRL(work.priceCents)}</span>
-            <span className="text-sm text-zinc-500">+ 2ª edição por <b>{formatBRL(work.secondPriceCents)}</b> • ex: Flamengo + Palmeiras = {formatBRL(8980)}</span>
+            <span className="text-3xl font-black" style={{ color: club.primaryColor }}>
+              {formatBRL(work.priceCents)}
+            </span>
+            <span className="text-sm text-zinc-500">
+              + 2ª edição por <b>{formatBRL(work.secondPriceCents)}</b> • ex: Flamengo + Palmeiras = {formatBRL(8980)}
+            </span>
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            <Link href={`/checkout?work=${work.slug}`}><Button size="lg" className="w-full text-base">COMPRAR POR {formatBRL(work.priceCents)}</Button></Link>
-            <Link href={`/checkout?work=${work.slug}&second=palmeiras`}><Button variant="outline" className="w-full">LEVE 2ª EDIÇÃO POR {formatBRL(work.secondPriceCents)}</Button></Link>
+            <Link href={`/checkout?work=${work.slug}`}>
+              <Button size="lg" className="w-full text-base shine">
+                COMPRAR POR {formatBRL(work.priceCents)}
+              </Button>
+            </Link>
+            <Link href={`/checkout?work=${work.slug}&second=palmeiras`}>
+              <Button variant="outline" className="w-full">
+                LEVE 2ª EDIÇÃO POR {formatBRL(work.secondPriceCents)}
+              </Button>
+            </Link>
             <div className="text-center text-xs text-zinc-500">PIX • QR + Copia e Cola • Certificado + QR de autenticidade • NFT opcional</div>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-center">
-            <Card className="p-2"><b>25</b><div className="text-zinc-500">páginas</div></Card>
-            <Card className="p-2"><b>10k</b><div className="text-zinc-500">tiragem</div></Card>
-            <Card className="p-2"><b>HQ</b><div className="text-zinc-500">digital</div></Card>
+            <Card className="p-3">
+              <div className="font-black text-lg">25</div>
+              <div className="text-zinc-500">páginas HQ</div>
+            </Card>
+            <Card className="p-3">
+              <div className="font-black text-lg">10k</div>
+              <div className="text-zinc-500">tiragem</div>
+            </Card>
+            <Card className="p-3">
+              <div className="font-black text-lg">✓</div>
+              <div className="text-zinc-500">autenticada</div>
+            </Card>
+          </div>
+          <div className="mt-3 flex items-center gap-2 text-xs text-zinc-500">
+            <img src={club.shield} alt={club.name} className="h-6 w-auto bg-white border rounded-lg p-0.5" />
+            Obra com escudo oficial • Conteúdo editorial independente
           </div>
         </div>
       </div>
 
-      <div className="mt-8">
-        <h3 className="font-bold">As 25 páginas — distribuição editorial (adaptável por clube)</h3>
-        <div className="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
+      <div className="mt-10">
+        <h3 className="font-black text-lg">As 25 páginas — distribuição editorial</h3>
+        <p className="text-sm text-zinc-500">Cada página um capítulo ilustrado. Adaptável à história de cada clube, sem forçar acontecimentos.</p>
+        <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
           {PAGES.map((t, i) => (
-            <Card key={i} className="p-3 flex gap-3">
-              <span className="h-6 w-6 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-bold shrink-0">{i+1}</span>
-              <span className="text-sm">{t}</span>
+            <Card key={i} className="p-3 flex gap-3 hover:shadow-md hover:-translate-y-0.5 transition">
+              <span className="h-7 w-7 rounded-xl text-white flex items-center justify-center text-xs font-black shrink-0" style={{ background: club.primaryColor }}>
+                {i + 1}
+              </span>
+              <span className="text-sm leading-snug">{t}</span>
             </Card>
           ))}
         </div>
-        <Card className="mt-4 p-4 bg-amber-50 border-amber-200 text-sm">
+        <Card className="mt-4 p-4 bg-amber-50 border-amber-200 text-sm leading-relaxed">
           <b>Princípio editorial:</b> Não é enciclopédia. Conta a história cronológica, emocionante e visualmente premium — origem, eras, ídolos, conquistas, torcida e encerramento autenticado. Sem inventar títulos/jogadores/resultados.
         </Card>
       </div>
