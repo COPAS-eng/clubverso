@@ -196,7 +196,7 @@ export default function Home() {
 
         <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="mt-6 grid md:grid-cols-3 gap-3">
           {[
-            { t: "Escassez verdadeira", d: `${work.issued} / ${work.maxSupply} • ${available} disponíveis. Contador real reiniciado 1/100.`, icon: Trophy },
+            { t: "Escassez verdadeira", d: `${work.issued} / ${work.maxSupply} • ${available} disponíveis. Contador real reiniciado 1/1000.`, icon: Trophy },
             { t: "Autenticidade", d: "Código FLA-2026-DIG-xxxxx, certificado e QR em /verificar/[code]. Camada permanente CLUBEVERSO.", icon: ShieldCheck },
             { t: "PIX + Presente", d: "Webhook HMAC idempotente. Segunda edição R$39,90 pode ser presenteada por e-mail.", icon: Zap },
           ].map((f) => (
