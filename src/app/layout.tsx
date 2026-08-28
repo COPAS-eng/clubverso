@@ -23,7 +23,6 @@ function Header() {
           <span className="hidden sm:inline text-xs text-zinc-500 font-medium">A história digital do seu clube.</span>
         </Link>
         <nav className="flex items-center gap-1.5 text-sm">
-          <Link href="/numeros" className="px-3 py-2 rounded-xl bg-[#C3281E] text-white hover:bg-[#9F1F18] transition font-semibold">Escolher número</Link>
           <Link href="/minha-colecao" className="px-3 py-2 rounded-xl hover:bg-zinc-100 transition">Minha coleção</Link>
           <Link href="/verificar/FLA-2026-DIG-04827" className="px-3 py-2 rounded-xl hover:bg-zinc-100 transition">Verificar</Link>
           <Link href="/admin" className="px-4 py-2 rounded-xl bg-zinc-900 text-white hover:bg-black transition font-semibold shadow-sm">

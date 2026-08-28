@@ -57,9 +57,9 @@ export default function Home() {
             </motion.p>
 
             <motion.div variants={item} className="mt-6 flex flex-wrap gap-3">
-              <Link href="/numeros">
+              <Link href="/obra/flamengo-1895-2026">
                 <Button size="lg" className="shine group">
-                  Escolher meu número 1–1000 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  Comprar edição sequencial <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </Link>
               <Link href="/clubes/flamengo">

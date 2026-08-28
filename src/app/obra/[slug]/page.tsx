@@ -87,16 +87,12 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
             </span>
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            <Link href="/numeros">
-              <Button size="lg" className="w-full text-base shine">
-                ESCOLHER NÚMERO 1–{work.maxSupply} • COMPRAR POR {formatBRL(work.priceCents)}
-              </Button>
-            </Link>
             <Link href={`/checkout?work=${work.slug}`}>
-              <Button variant="outline" className="w-full">
-                COMPRAR RÁPIDO POR {formatBRL(work.priceCents)}
+              <Button size="lg" className="w-full text-base shine">
+                COMPRAR EDIÇÃO SEQUENCIAL • {formatBRL(work.priceCents)}
               </Button>
             </Link>
+            <div className="text-center text-xs text-zinc-500">Venda sequencial: após 1 é o 2, depois 3... • 1/10000 • 9.999 disponíveis</div>
             <div className="text-center text-xs text-zinc-500">PIX • QR + Copia e Cola • Certificado + QR de autenticidade • NFT opcional</div>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-center">
