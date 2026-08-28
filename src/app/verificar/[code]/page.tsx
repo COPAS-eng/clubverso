@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { MOCK_CATALOG } from "@/lib/catalog";
+import { assetPath } from "@/lib/utils";
 
 export function generateStaticParams() {
   return [{ code: "FLA-2026-DIG-04827" }, { code: "FLA-2026-DIG-00001" }, { code: "PAL-2026-DIG-00001" }];
@@ -20,7 +21,7 @@ export default function VerificarPage({ params }: { params: { code: string } }) 
           {isValid ? (
             <>
               <div className="mx-auto h-16 w-16 rounded-2xl bg-white border shadow flex items-center justify-center p-2">
-                <img src={club!.shield} alt={club!.name} className="h-full w-auto object-contain" />
+                <img src={assetPath(club!.shield)} alt={club!.name} className="h-full w-auto object-contain" />
               </div>
               <Badge className="mt-3 bg-emerald-50 text-emerald-700 border-emerald-200">EDIÇÃO AUTÊNTICA ✓</Badge>
               <h1 className="mt-2 text-2xl font-black tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>
@@ -31,7 +32,7 @@ export default function VerificarPage({ params }: { params: { code: string } }) 
                 <div className="rounded-xl bg-zinc-50 border p-3">
                   <div className="text-zinc-500 text-xs">Clube</div>
                   <div className="font-bold flex items-center gap-2">
-                    <img src={club!.shield} alt={club!.name} className="h-5 w-auto" /> {club!.name}
+                    <img src={assetPath(club!.shield)} alt={club!.name} className="h-5 w-auto" /> {club!.name}
                   </div>
                 </div>
                 <div className="rounded-xl bg-zinc-50 border p-3">

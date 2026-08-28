@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { PageTransition } from "@/components/site/PageTransition";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR" className={`${inter.variable} ${playfair.variable}`}>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <footer className="border-t bg-white py-6 text-center text-xs leading-relaxed text-zinc-500">
           <div className="mx-auto max-w-6xl px-4">
             <div className="font-semibold tracking-widest text-zinc-900">CLUBEVERSO</div>

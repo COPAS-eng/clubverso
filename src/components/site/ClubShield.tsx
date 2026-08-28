@@ -1,6 +1,18 @@
 "use client";
 import { motion } from "framer-motion";
 
+function withBasePath(src: string) {
+  if (!src.startsWith("/")) return src;
+  // GitHub Pages project site precisa de /clubverso prefix
+  if (typeof window !== "undefined" && window.location.pathname.startsWith("/clubverso") && !src.startsWith("/clubverso")) {
+    return `/clubverso${src}`;
+  }
+  // fallback para build static: NEXT_PUBLIC_BASE_PATH
+  const bp = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  if (bp && !src.startsWith(bp)) return `${bp}${src}`;
+  return src;
+}
+
 export function ClubShield({
   src,
   alt,
@@ -14,6 +26,7 @@ export function ClubShield({
   primaryColor: string;
   delay?: number;
 }) {
+  const resolvedSrc = withBasePath(src);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, rotate: -8, scale: 0.9 }}
@@ -36,7 +49,7 @@ export function ClubShield({
         <div className="absolute inset-0 bg-gradient-to-b from-white to-zinc-50" />
         <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
         <img
-          src={src}
+          src={resolvedSrc}
           alt={alt}
           loading="lazy"
           className="relative w-full h-full object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)]"

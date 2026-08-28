@@ -33,6 +33,21 @@ async function main() {
       licensingStatus: "NOT_VERIFIED",
     },
   });
+  for (const c of [
+    { slug: "palmeiras", name: "Sociedade Esportiva Palmeiras", shortCode: "PAL", primaryColor: "#006437", secondaryColor: "#FFFFFF" },
+    { slug: "corinthians", name: "Sport Club Corinthians Paulista", shortCode: "COR", primaryColor: "#000000", secondaryColor: "#FFFFFF" },
+    { slug: "sao-paulo", name: "São Paulo Futebol Clube", shortCode: "SAO", primaryColor: "#FE0000", secondaryColor: "#000000" },
+    { slug: "santos", name: "Santos Futebol Clube", shortCode: "SAN", primaryColor: "#FFFFFF", secondaryColor: "#000000" },
+    { slug: "vasco", name: "Club de Regatas Vasco da Gama", shortCode: "VAS", primaryColor: "#000000", secondaryColor: "#FFFFFF" },
+    { slug: "cruzeiro", name: "Cruzeiro Esporte Clube", shortCode: "CRU", primaryColor: "#003399", secondaryColor: "#FFFFFF" },
+    { slug: "gremio", name: "Grêmio Foot-Ball Porto Alegrense", shortCode: "GRE", primaryColor: "#0099DD", secondaryColor: "#000000" },
+  ]) {
+    await prisma.club.upsert({
+      where: { slug: c.slug },
+      update: {},
+      create: { slug: c.slug, name: c.name, shortCode: c.shortCode, countryId: country.id, leagueId: league.id, primaryColor: c.primaryColor, secondaryColor: c.secondaryColor, licensingStatus: "NOT_VERIFIED" },
+    });
+  }
 
   const work = await prisma.work.upsert({
     where: { slug: "flamengo-1895-2026" },
@@ -42,7 +57,7 @@ async function main() {
       title: "Flamengo — 1895–2026", subtitle: "Da origem náutica ao clube do povo. 25 páginas originais.",
       description: "Obra HQ premium que conta a evolução do Flamengo desde 1895 até 2026: origem náutica, consolidação no futebol (1911), eras, ídolos, conquistas e torcida. Fechamento editorial em 28/08/2026.",
       periodStart: 1895, periodEnd: 2026, version: "FLA-2026-V1",
-      maxSupply: 10000, priceCents: 4990, secondPriceCents: 3990,
+      maxSupply: 100, priceCents: 4990, secondPriceCents: 3990,
       status: "PUBLISHED", editorialClosedAt: new Date("2026-08-28"),
       totalPages: 25,
     },

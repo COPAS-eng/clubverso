@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MOCK_CATALOG } from "@/lib/catalog";
+import { assetPath } from "@/lib/utils";
 
 export default function AdminPage() {
   const work = MOCK_CATALOG.works[0];
@@ -11,15 +12,15 @@ export default function AdminPage() {
       <div className="mt-5 grid md:grid-cols-3 gap-3">
         <Card className="p-4 overflow-hidden">
           <div className="flex items-center gap-3">
-            <img src={MOCK_CATALOG.clubs.find((c) => c.slug === "flamengo")!.shield} alt="FLA" className="h-10 w-auto" />
+            <img src={assetPath(MOCK_CATALOG.clubs.find((c) => c.slug === "flamengo")!.shield)} alt="FLA" className="h-10 w-auto" />
             <div>
               <div className="text-xs text-zinc-500">Flamengo 1895–2026</div>
-              <div className="text-2xl font-black">4.827 / 10.000</div>
+              <div className="text-2xl font-black">{work.issued} / {work.maxSupply}</div>
             </div>
           </div>
-          <div className="text-xs text-emerald-600 font-semibold">5.173 disponíveis</div>
+          <div className="text-xs text-emerald-600 font-semibold">{work.maxSupply - work.issued} disponíveis • Reiniciado 1/100</div>
           <div className="mt-2 w-full h-2 rounded-full bg-zinc-100 overflow-hidden">
-            <div className="h-full bg-[#C3281E]" style={{ width: "48.27%" }} />
+            <div className="h-full bg-[#C3281E]" style={{ width: `${(work.issued / work.maxSupply) * 100}%` }} />
           </div>
           <Badge className="mt-3 bg-emerald-50 text-emerald-700 border-emerald-200">PUBLISHED</Badge>
         </Card>
@@ -34,7 +35,7 @@ export default function AdminPage() {
           <div className="mt-2 grid grid-cols-4 gap-2">
             {MOCK_CATALOG.clubs.map((c) => (
               <div key={c.slug} className="flex flex-col items-center gap-1">
-                <img src={c.shield} alt={c.name} className="h-8 w-auto bg-white border rounded-lg p-1" />
+                <img src={assetPath(c.shield)} alt={c.name} className="h-8 w-auto bg-white border rounded-lg p-1" />
                 <span className="text-[9px] font-bold">{c.shortCode}</span>
               </div>
             ))}

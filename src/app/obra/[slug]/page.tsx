@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { formatBRL } from "@/lib/pricing";
 import { ClubShield } from "@/components/site/ClubShield";
+import { assetPath } from "@/lib/utils";
+import { PagesGrid } from "@/components/site/PagesGrid";
 
 const PAGES = [
   "Origem — 1895, remo e Rio",
@@ -57,7 +59,7 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
               <div className="text-2xl font-black tracking-tight">{work.title}</div>
               <div className="text-xs tracking-[0.22em] opacity-70 mt-1">25 PÁGINAS • HQ PREMIUM • ILUSTRAÇÕES ORIGINAIS</div>
               <div className="mt-3 text-xs bg-white/15 border border-white/20 px-3 py-1 rounded-full inline-block backdrop-blur">
-                {available.toLocaleString("pt-BR")} / {work.maxSupply.toLocaleString("pt-BR")} disponíveis
+                {work.issued} / {work.maxSupply} • {available} disponíveis
               </div>
             </div>
             <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
@@ -65,12 +67,12 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
           <CardContent className="p-4 flex items-center justify-between text-xs text-zinc-500">
             <span>Fechamento editorial: {work.editorialClosedAt} • {work.version}</span>
             <span className="flex items-center gap-1.5">
-              <img src={club.shield} alt={club.name} className="h-5 w-auto" /> {club.name}
+              <img src={assetPath(club.shield)} alt={club.name} className="h-5 w-auto" /> {club.name}
             </span>
           </CardContent>
         </Card>
         <div>
-          <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200">{available.toLocaleString("pt-BR")} / {work.maxSupply.toLocaleString("pt-BR")} DISPONÍVEIS</Badge>
+          <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200">{work.issued} / {work.maxSupply} • {available} DISPONÍVEIS</Badge>
           <h1 className="text-3xl font-black mt-2 tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>
             {work.title}
           </h1>
@@ -103,7 +105,7 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
               <div className="text-zinc-500">páginas HQ</div>
             </Card>
             <Card className="p-3">
-              <div className="font-black text-lg">10k</div>
+              <div className="font-black text-lg">{work.maxSupply}</div>
               <div className="text-zinc-500">tiragem</div>
             </Card>
             <Card className="p-3">
@@ -112,8 +114,8 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
             </Card>
           </div>
           <div className="mt-3 flex items-center gap-2 text-xs text-zinc-500">
-            <img src={club.shield} alt={club.name} className="h-6 w-auto bg-white border rounded-lg p-0.5" />
-            Obra com escudo oficial • Conteúdo editorial independente
+            <img src={assetPath(club.shield)} alt={club.name} className="h-6 w-auto bg-white border rounded-lg p-0.5" />
+            Obra com escudo oficial • Tiragem reiniciada 1/100
           </div>
         </div>
       </div>
@@ -121,16 +123,7 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
       <div className="mt-10">
         <h3 className="font-black text-lg">As 25 páginas — distribuição editorial</h3>
         <p className="text-sm text-zinc-500">Cada página um capítulo ilustrado. Adaptável à história de cada clube, sem forçar acontecimentos.</p>
-        <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-          {PAGES.map((t, i) => (
-            <Card key={i} className="p-3 flex gap-3 hover:shadow-md hover:-translate-y-0.5 transition">
-              <span className="h-7 w-7 rounded-xl text-white flex items-center justify-center text-xs font-black shrink-0" style={{ background: club.primaryColor }}>
-                {i + 1}
-              </span>
-              <span className="text-sm leading-snug">{t}</span>
-            </Card>
-          ))}
-        </div>
+        <PagesGrid pages={PAGES} clubColor={club.primaryColor} />
         <Card className="mt-4 p-4 bg-amber-50 border-amber-200 text-sm leading-relaxed">
           <b>Princípio editorial:</b> Não é enciclopédia. Conta a história cronológica, emocionante e visualmente premium — origem, eras, ídolos, conquistas, torcida e encerramento autenticado. Sem inventar títulos/jogadores/resultados.
         </Card>

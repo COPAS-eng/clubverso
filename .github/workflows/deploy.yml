@@ -39,6 +39,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_ACTOR: ${{ github.actor }}
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
           DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
       - name: Add .nojekyll
         run: touch out/.nojekyll

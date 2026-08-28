@@ -9,6 +9,7 @@ import { formatBRL } from "@/lib/pricing";
 import { ClubShield } from "@/components/site/ClubShield";
 import { ArrowRight, Sparkles, ShieldCheck, Zap, BookOpen, Trophy } from "lucide-react";
 import { useRef } from "react";
+import { assetPath } from "@/lib/utils";
 
 const container = {
   hidden: {},
@@ -42,7 +43,7 @@ export default function Home() {
           <motion.div variants={container} initial="hidden" animate="show">
             <motion.div variants={item} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs glass">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              EDIÇÃO LIMITADA • {available.toLocaleString("pt-BR")} / {work.maxSupply.toLocaleString("pt-BR")} DISPONÍVEIS
+              EDIÇÃO LIMITADA • {work.issued} / {work.maxSupply} • {available} DISPONÍVEIS
               <Sparkles className="h-3.5 w-3.5 opacity-70" />
             </motion.div>
 
@@ -71,7 +72,7 @@ export default function Home() {
             <motion.div variants={item} className="mt-7 grid grid-cols-3 gap-3 max-w-[520px]">
               {[
                 { k: "25", l: "páginas HQ", icon: BookOpen },
-                { k: "10k", l: "edições", icon: Trophy },
+                { k: `${work.issued}/${work.maxSupply}`, l: "edições", icon: Trophy },
                 { k: formatBRL(work.priceCents), l: `+ 2ª ${formatBRL(work.secondPriceCents)}`, icon: Zap },
               ].map((s) => (
                 <div key={s.k} className="rounded-2xl border border-white/10 bg-white/[0.06] glass px-3 py-3">
@@ -103,7 +104,7 @@ export default function Home() {
                     className="relative"
                   >
                     <img
-                      src={MOCK_CATALOG.clubs.find((c) => c.slug === "flamengo")!.shield}
+                      src={assetPath(MOCK_CATALOG.clubs.find((c) => c.slug === "flamengo")!.shield)}
                       alt="Flamengo"
                       className="h-[110px] w-auto drop-shadow-[0_12px_24px_rgba(0,0,0,0.35)] bg-white rounded-[14%] p-2"
                     />
@@ -123,7 +124,7 @@ export default function Home() {
                     <div className="text-sm font-black">Flamengo — 1895–2026</div>
                     <div className="text-xs text-zinc-500 line-clamp-2">Da origem náutica ao clube do povo. 25 capítulos ilustrados.</div>
                   </div>
-                  <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 shrink-0">{available.toLocaleString("pt-BR")} disponíveis</Badge>
+                  <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 shrink-0">{work.issued} / {work.maxSupply} • {available} disponíveis</Badge>
                 </div>
                 <div className="mt-3 flex items-center justify-between">
                   <span className="text-lg font-black text-[#C3281E]">{formatBRL(work.priceCents)}</span>
@@ -195,7 +196,7 @@ export default function Home() {
 
         <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true }} className="mt-6 grid md:grid-cols-3 gap-3">
           {[
-            { t: "Escassez verdadeira", d: `${available.toLocaleString("pt-BR")} / 10.000 disponíveis. Contador em tempo real, sem vendas falsas.`, icon: Trophy },
+            { t: "Escassez verdadeira", d: `${work.issued} / ${work.maxSupply} • ${available} disponíveis. Contador real reiniciado 1/100.`, icon: Trophy },
             { t: "Autenticidade", d: "Código FLA-2026-DIG-xxxxx, certificado e QR em /verificar/[code]. Camada permanente CLUBEVERSO.", icon: ShieldCheck },
             { t: "PIX + Presente", d: "Webhook HMAC idempotente. Segunda edição R$39,90 pode ser presenteada por e-mail.", icon: Zap },
           ].map((f) => (

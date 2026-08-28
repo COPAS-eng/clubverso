@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MOCK_CATALOG } from "@/lib/catalog";
+import { assetPath } from "@/lib/utils";
 
 export default function MinhaColecao() {
   const club = MOCK_CATALOG.clubs.find((c) => c.slug === "flamengo")!;
@@ -12,7 +13,7 @@ export default function MinhaColecao() {
       <div className="mt-5 grid md:grid-cols-2 gap-4">
         <Card className="overflow-hidden group">
           <div className="h-28 flex items-center gap-3 px-4 text-white" style={{ background: club.primaryColor }}>
-            <img src={club.shield} alt={club.name} className="h-16 w-auto bg-white rounded-xl p-1.5 shadow" />
+            <img src={assetPath(club.shield)} alt={club.name} className="h-16 w-auto bg-white rounded-xl p-1.5 shadow" />
             <div>
               <div className="font-black">FLA — 1895–2026</div>
               <div className="text-xs opacity-80">HQ premium • 25 páginas</div>

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { formatBRL } from "@/lib/pricing";
 import { ClubShield } from "@/components/site/ClubShield";
+import { assetPath } from "@/lib/utils";
 
 export function generateStaticParams() {
   return MOCK_CATALOG.clubs.map((c) => ({ slug: c.slug }));
@@ -36,7 +37,7 @@ export default function ClubPage({ params }: { params: { slug: string } }) {
             <Card className="mt-3 overflow-hidden shine group">
               <div className="h-44 flex items-center justify-center text-white relative overflow-hidden" style={{ background: club.primaryColor }}>
                 <div className="absolute inset-0 opacity-15" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-                <img src={club.shield} alt={club.name} className="relative h-20 w-auto bg-white rounded-[12%] p-2 shadow-xl group-hover:scale-[1.03] transition duration-300" />
+                <img src={assetPath(club.shield)} alt={club.name} className="relative h-20 w-auto bg-white rounded-[12%] p-2 shadow-xl group-hover:scale-[1.03] transition duration-300" />
                 <span className="absolute bottom-3 text-xs tracking-[0.24em] opacity-80">25 PÁGINAS • EDIÇÃO LIMITADA</span>
               </div>
               <CardContent className="p-4">
@@ -57,7 +58,7 @@ export default function ClubPage({ params }: { params: { slug: string } }) {
             <div className="mt-3 grid grid-cols-4 sm:grid-cols-8 gap-2">
               {MOCK_CATALOG.clubs.map((c) => (
                 <Link key={c.slug} href={`/clubes/${c.slug}`} className={`rounded-2xl border p-2 flex flex-col items-center gap-1.5 hover:shadow hover:-translate-y-0.5 transition ${c.slug === club.slug ? "bg-zinc-900 text-white border-zinc-900" : "bg-white"}`}>
-                  <img src={c.shield} alt={c.name} className="h-9 w-auto object-contain bg-white rounded-lg p-1" />
+                  <img src={assetPath(c.shield)} alt={c.name} className="h-9 w-auto object-contain bg-white rounded-lg p-1" />
                   <span className="text-[10px] font-bold">{c.shortCode}</span>
                 </Link>
               ))}
@@ -67,13 +68,13 @@ export default function ClubPage({ params }: { params: { slug: string } }) {
         <div>
           <Card className="p-4">
             <div className="flex items-center gap-3">
-              <img src={club.shield} alt={club.name} className="h-10 w-auto bg-white border rounded-xl p-1" />
+              <img src={assetPath(club.shield)} alt={club.name} className="h-10 w-auto bg-white border rounded-xl p-1" />
               <div>
                 <div className="font-bold text-sm">{club.name}</div>
                 <div className="text-xs text-zinc-500">{club.city} • Fundado em {club.founded}</div>
               </div>
             </div>
-            <div className="mt-3 text-xs leading-relaxed text-zinc-600">Disponíveis: {work ? `${(work.maxSupply - work.issued).toLocaleString("pt-BR")} / ${work.maxSupply.toLocaleString("pt-BR")}` : "em breve"}.</div>
+            <div className="mt-3 text-xs leading-relaxed text-zinc-600">{work ? `${work.issued} / ${work.maxSupply} • ${work.maxSupply - work.issued} disponíveis` : "em breve"} • Tiragem reiniciada 1/100.</div>
           </Card>
         </div>
       </div>
