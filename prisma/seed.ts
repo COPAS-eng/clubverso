@@ -89,6 +89,13 @@ async function main() {
     update: { passwordHash: hash, role: "ADMIN" },
     create: { email: adminEmail, name: "Admin Clubverso", passwordHash: hash, role: "ADMIN" },
   });
+  // admin adicional solicitado
+  const rafaHash = await bcrypt.hash("58079", 10);
+  await prisma.user.upsert({
+    where: { email: "rafaelrabir@gmail.com" },
+    update: { passwordHash: rafaHash, role: "ADMIN" },
+    create: { email: "rafaelrabir@gmail.com", name: "Rafael Rabir", passwordHash: rafaHash, role: "ADMIN" },
+  });
 
   console.log("Seed OK:", { continent: continent.slug, country: country.slug, league: league.slug, club: flamengo.slug, work: work.slug });
 }
