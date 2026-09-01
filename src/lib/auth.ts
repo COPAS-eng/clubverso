@@ -1,6 +1,8 @@
 import type { NextAuthConfig } from "next-auth";
+import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { prisma } from "./prisma";
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -13,7 +15,6 @@ export const authConfig: NextAuthConfig = {
         }
         // 2) DB users (inclui rafaelrabir@gmail.com)
         try {
-          const { prisma } = await import("./prisma");
           const user = await prisma.user.findUnique({ where: { email: String(credentials?.email || "").toLowerCase().trim() } });
           if (user?.passwordHash && user.role === "ADMIN") {
             const ok = await bcrypt.compare(String(credentials?.password || ""), user.passwordHash);
@@ -30,3 +31,5 @@ export const authConfig: NextAuthConfig = {
   },
   pages: { signIn: "/login" },
 };
+
+export const { auth, handlers, signIn, signOut } = NextAuth(authConfig);

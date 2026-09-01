@@ -37,3 +37,14 @@ next-env.d.ts
 
 .env
 
+
+# OxAlpha API key document - nunca commitar
+OXALPHA_API_KEY.md
+oxalpha*.txt
+
+
+# FreeLLMAPI - nunca commitar
+FREELLMAPI_API_KEY.md
+freellmapi*.txt
+API_KEYS.md
+

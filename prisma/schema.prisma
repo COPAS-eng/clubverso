@@ -149,13 +149,13 @@ model Edition {
   id                 String        @id @default(cuid())
   workId             String
   work               Work          @relation(fields: [workId], references: [id])
-  editionNumber      Int // 1..1000
+  editionNumber      Int // 1..10000
   editionCode        String        @unique // FLA-2026-DIG-00001
   ownerId            String?
   owner              User?         @relation(fields: [ownerId], references: [id])
   orderItemId        String?       @unique
   orderItem          OrderItem?    @relation(fields: [orderItemId], references: [id])
-  status             EditionStatus @default(ASSIGNED)
+  status             EditionStatus @default(AVAILABLE)
   // Reserva temporária 5min
   reservedAt         DateTime?
   expiresAt          DateTime?
@@ -227,20 +227,21 @@ model OrderItem {
 }
 
 model Payment {
-  id             String        @id @default(cuid())
-  orderId        String        @unique
-  order          Order         @relation(fields: [orderId], references: [id])
-  provider       String // EFI, MERCADOPAGO, MOCK
-  providerTxId   String?       @unique
-  pixTxId        String?       @unique
-  pixQrCode      String?       @db.Text
-  pixCopyPaste   String?       @db.Text
-  amountCents    Int
-  status         PaymentStatus @default(PENDING)
-  webhookPayload Json?
-  confirmedAt    DateTime?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  id                     String        @id @default(cuid())
+  orderId                String        @unique
+  order                  Order         @relation(fields: [orderId], references: [id])
+  provider               String // EFI, MERCADOPAGO, PIX_DIRECT
+  providerTxId           String?       @unique
+  pixTxId                String?       @unique
+  pixQrCode              String?       @db.Text
+  pixCopyPaste           String?       @db.Text
+  amountCents            Int
+  status                 PaymentStatus @default(PENDING)
+  webhookPayload         Json?
+  customerReportedPaidAt DateTime? // cliente clicou "já paguei" — aguardando conferência manual do admin
+  confirmedAt            DateTime?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
 
   @@index([status])
 }
