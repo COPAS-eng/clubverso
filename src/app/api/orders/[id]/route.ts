@@ -17,7 +17,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
           customerReportedPaidAt: order.payment.customerReportedPaidAt,
         }
       : null,
-    items: order.items.map((item) => ({
+    items: order.items.map((item: any) => ({
       workTitle: item.work.title,
       isGift: item.isGift,
       editionCode: item.edition?.editionCode ?? null,

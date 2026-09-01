@@ -33,7 +33,8 @@ export async function POST(req: NextRequest) {
     const qrDataUrl = `PIX:${paymentId}:${editionCode}:${work.priceCents}`;
 
     // transação com bloqueio: tenta reservar apenas se disponivel ou expirado
-    const result = await prisma.$transaction(async (tx) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = await prisma.$transaction(async (tx: any) => {
       const existing = await tx.edition.findUnique({ where: { workId_editionNumber: { workId: work.id, editionNumber: numero } } });
 
       if (existing) {

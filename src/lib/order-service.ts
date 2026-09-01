@@ -65,7 +65,7 @@ export async function createOrderWithPix(input: CreateOrderInput) {
   });
 
   if (input.gift) {
-    const giftItem = order.items.find((i) => i.isGift)!;
+    const giftItem = order.items.find((i: any) => i.isGift)!;
     await prisma.gift.create({
       data: { orderId: order.id, orderItemId: giftItem.id, recipientEmail: input.gift.recipientEmail },
     });
@@ -105,7 +105,8 @@ export async function markCustomerReportedPaid(orderId: string) {
 export async function confirmOrderPayment(orderId: string, actor: { email: string }) {
   try {
     return await prisma.$transaction(
-      async (tx) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      async (tx: any) => {
         const order = await tx.order.findUnique({
           where: { id: orderId },
           include: { items: true, payment: true },
@@ -152,7 +153,7 @@ export async function confirmOrderPayment(orderId: string, actor: { email: strin
                 editionCode: code,
                 maxSupply: work.maxSupply,
                 editorialClosedAt: work.editorialClosedAt,
-              } as Prisma.InputJsonValue,
+              } as any,
             },
           });
 
@@ -162,7 +163,7 @@ export async function confirmOrderPayment(orderId: string, actor: { email: strin
               action: "EDITION_ASSIGNED",
               entity: "Edition",
               entityId: edition.id,
-              metadata: { code, number: nextNumber, orderId } as Prisma.InputJsonValue,
+              metadata: { code, number: nextNumber, orderId } as any,
             },
           });
         }
@@ -172,22 +173,22 @@ export async function confirmOrderPayment(orderId: string, actor: { email: strin
           where: { orderId },
           data: { status: "CONFIRMED", confirmedAt: new Date() },
         });
-        await tx.auditLog.create({
-          data: {
-            actorEmail: actor.email,
-            action: "PAYMENT_CONFIRMED_MANUAL",
-            entity: "Order",
-            entityId: orderId,
-            metadata: { totalCents: order.totalCents } as Prisma.InputJsonValue,
-          },
-        });
+await tx.auditLog.create({
+            data: {
+              actorEmail: actor.email,
+              action: "PAYMENT_CONFIRMED_MANUAL",
+              entity: "Order",
+              entityId: orderId,
+              metadata: { totalCents: order.totalCents } as any,
+            },
+          });
 
         return updatedOrder;
       },
-      { isolationLevel: Prisma.TransactionIsolationLevel.Serializable, maxWait: 5000, timeout: 10000 }
+      { isolationLevel: "Serializable" as any, maxWait: 5000, timeout: 10000 }
     );
-  } catch (err) {
-    if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
+  } catch (err: any) {
+    if (err?.code === "P2002") {
       throw new Error("Conflito ao atribuir edição — tente confirmar novamente.");
     }
     throw err;
