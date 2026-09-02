@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getOrderStatus } from "@/lib/order-service";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   const order = await getOrderStatus(params.id);
   if (!order) return NextResponse.json({ error: "Pedido não encontrado" }, { status: 404 });

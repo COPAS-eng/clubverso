@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { formatEditionCode } from "@/lib/edition-code";
 import crypto from "crypto";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/numbers/reserve { workSlug, numero, email }
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));

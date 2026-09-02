@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { confirmOrderPayment, SoldOutError, OrderNotFoundError } from "@/lib/order-service";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(_req: NextRequest, { params }: { params: { id: string } }) {
   const session = await auth();
   if ((session?.user as any)?.role !== "ADMIN" || !session?.user?.email) {

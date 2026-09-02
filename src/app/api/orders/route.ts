@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createOrderWithPix, SoldOutError } from "@/lib/order-service";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
   const workSlug = typeof body.workSlug === "string" ? body.workSlug : "flamengo-1895-2026";

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { MOCK_CATALOG } from "@/lib/catalog";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/numbers?workSlug=flamengo-1895-2026
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

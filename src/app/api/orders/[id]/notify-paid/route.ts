@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { markCustomerReportedPaid, OrderNotFoundError } from "@/lib/order-service";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
     await markCustomerReportedPaid(params.id);

@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+
 export async function GET(_: NextRequest, { params }: { params: { code: string } }) {
   const code = decodeURIComponent(params.code);
   const valid = /^[A-Z]{2,5}-\d{4}-DIG-\d{5}$/.test(code);
