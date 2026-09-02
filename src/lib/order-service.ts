@@ -2,6 +2,8 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { formatEditionCode } from "@/lib/edition-code";
 import { DirectPixGateway } from "@/lib/payments/pix-direct-adapter";
+import { generatePersonalizedPdf } from "@/lib/pdf";
+import { putObject } from "@/lib/storage";
 
 export class SoldOutError extends Error {
   constructor() {
@@ -165,6 +167,19 @@ export async function confirmOrderPayment(orderId: string, actor: { email: strin
               entityId: edition.id,
               metadata: { code, number: nextNumber, orderId } as any,
             },
+          });
+
+          // Gerar PDF personalizado com selo de autenticidade
+          const { buffer, key } = await generatePersonalizedPdf({
+            workTitle: work.title,
+            editionNumber: nextNumber,
+            maxSupply: work.maxSupply,
+            editionCode: code,
+            clubName: work.club.name,
+          });
+          await tx.edition.update({
+            where: { id: edition.id },
+            data: { personalizedPdfUrl: key },
           });
         }
 
