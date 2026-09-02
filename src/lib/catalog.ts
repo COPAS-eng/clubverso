@@ -127,7 +127,7 @@ export const MOCK_CATALOG = {
       status: "PUBLISHED" as const,
       totalPages: 25,
       editorialClosedAt: "2026-08-28",
-      coverImageUrl: "",
+      coverImageUrl: "/flamengo/capa.png",
     },
   ],
 };
