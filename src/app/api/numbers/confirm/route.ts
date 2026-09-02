@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 // POST /api/numbers/confirm { workSlug, numero, paymentId, email }
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => ({}));
