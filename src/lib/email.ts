@@ -23,6 +23,14 @@ export async function sendEmail(payload: EmailPayload) {
   return data;
 }
 
+export function renderPaymentReportedEmail({ orderId, totalCents, customerEmail }: { orderId: string; totalCents: number; customerEmail: string }) {
+  const total = (totalCents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  return {
+    subject: `PIX avisado: ${total} — pedido ${orderId.slice(0, 8)}`,
+    html: `<div style="font-family:system-ui;padding:24px;max-width:560px"><h1 style="font-size:20px">CLUBEVERSO — pagamento avisado</h1><p>Cliente: <b>${customerEmail}</b><br/>Pedido: <b>${orderId}</b><br/>Total: <b>${total}</b></p><p>Confira o extrato e confirme em /admin/pedidos.</p></div>`,
+  };
+}
+
 export function renderOrderConfirmedEmail({ editionCode, numero, workTitle, verifyUrl }: { editionCode: string; numero: number; workTitle: string; verifyUrl: string }) {
   return {
     subject: `Sua edição ${editionCode} está pronta!`,

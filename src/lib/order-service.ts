@@ -3,7 +3,6 @@ import { prisma } from "@/lib/prisma";
 import { formatEditionCode } from "@/lib/edition-code";
 import { DirectPixGateway } from "@/lib/payments/pix-direct-adapter";
 import { generatePersonalizedPdf } from "@/lib/pdf";
-import { putObject } from "@/lib/storage";
 
 export class SoldOutError extends Error {
   constructor() {

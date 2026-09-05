@@ -48,3 +48,5 @@ FREELLMAPI_API_KEY.md
 freellmapi*.txt
 API_KEYS.md
 
+.vercel
+.env*
