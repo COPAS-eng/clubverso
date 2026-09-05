@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { markCustomerReportedPaid, getOrderStatus, OrderNotFoundError } from "@/lib/order-service";
 import { sendSms, adminPhones } from "@/lib/sms";
-import { sendEmail, renderPaymentReportedEmail } from "@/lib/email";
+import { sendEmail, renderPaymentReportedEmail, notifyEmails } from "@/lib/email";
 import { formatBRL } from "@/lib/pricing";
 
 export const dynamic = "force-dynamic";
@@ -23,14 +23,13 @@ export async function POST(_req: NextRequest, { params }: { params: { id: string
         ).catch((e) => console.error("sms notify fail", e));
       }
 
-      const adminEmail = process.env.ADMIN_EMAIL;
-      if (adminEmail) {
+      for (const to of notifyEmails()) {
         const email = renderPaymentReportedEmail({
           orderId: order.id,
           totalCents: order.totalCents,
           customerEmail: order.customerEmail,
         });
-        await sendEmail({ to: adminEmail, subject: email.subject, html: email.html }).catch((e) =>
+        await sendEmail({ to, subject: email.subject, html: email.html }).catch((e) =>
           console.error("email notify fail", e)
         );
       }

@@ -23,6 +23,16 @@ export async function sendEmail(payload: EmailPayload) {
   return data;
 }
 
+export function notifyEmails(): string[] {
+  const list = (process.env.NOTIFY_EMAILS || "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter((e) => e.includes("@"));
+  const admin = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  if (admin && admin.includes("@") && !list.includes(admin)) list.push(admin);
+  return list;
+}
+
 export function renderPaymentReportedEmail({ orderId, totalCents, customerEmail }: { orderId: string; totalCents: number; customerEmail: string }) {
   const total = (totalCents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   return {
