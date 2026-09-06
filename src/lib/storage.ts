@@ -3,7 +3,10 @@ import { randomUUID } from "crypto";
 import fs from "fs";
 import path from "path";
 
-const MOCK_DIR = path.join(process.cwd(), ".mock-storage");
+// Vercel serverless: filesystem somente-leitura, exceto /tmp
+const MOCK_DIR = process.env.VERCEL
+  ? path.join("/tmp", ".mock-storage")
+  : path.join(process.cwd(), ".mock-storage");
 
 function ensureMockDir() {
   if (!fs.existsSync(MOCK_DIR)) fs.mkdirSync(MOCK_DIR, { recursive: true });
