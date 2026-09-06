@@ -1,14 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createOrderWithPix, SoldOutError } from "@/lib/order-service";
-import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  const rl = rateLimit(`orders:${clientIp(req)}`, 10, 60_000);
-  if (!rl.ok) {
-    return NextResponse.json({ error: "Muitas tentativas. Aguarde um minuto." }, { status: 429 });
-  }
   const body = await req.json().catch(() => ({}));
   const workSlug = typeof body.workSlug === "string" ? body.workSlug : "flamengo-1895-2026";
   const customerEmail = typeof body.customerEmail === "string" ? body.customerEmail.trim() : "";
