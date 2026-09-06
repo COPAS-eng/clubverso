@@ -164,6 +164,7 @@ model Edition {
   paymentConfirmed   Boolean       @default(false)
   qrCodeUrl          String?
   personalizedPdfUrl String?
+  downloadCount      Int            @default(0)
   certificate        Certificate?
   nftAsset           NFTAsset?
   gift               Gift?
