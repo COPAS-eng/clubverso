@@ -7,6 +7,11 @@ export const dynamic = "force-dynamic";
 
 // POST /api/numbers/reserve { workSlug, numero, email }
 export async function POST(req: NextRequest) {
+  const { rateLimit, clientIp } = await import("@/lib/rate-limit");
+  const rl = rateLimit(`reserve:${clientIp(req)}`, 20, 60_000);
+  if (!rl.ok) {
+    return NextResponse.json({ error: "Muitas tentativas. Aguarde um minuto." }, { status: 429 });
+  }
   const body = await req.json().catch(() => ({}));
   const workSlug = body.workSlug || "flamengo-1895-2026";
   const numero = Number(body.numero);

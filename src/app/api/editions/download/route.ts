@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getPresignedUrl } from "@/lib/storage";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
 const MAX_DOWNLOADS_PER_EDITION = 10;
 
 export async function GET(req: NextRequest) {
+  const rl = rateLimit(`download:${clientIp(req)}`, 20, 60_000);
+  if (!rl.ok) {
+    return NextResponse.json({ error: "Muitas tentativas. Aguarde um minuto." }, { status: 429 });
+  }
   const code = req.nextUrl.searchParams.get("code");
   if (!code) return NextResponse.json({ error: "code required" }, { status: 400 });
   try {
