@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 function LoginInner() {
   const sp = useSearchParams();
   const router = useRouter();
-  const callbackUrl = sp.get("callbackUrl") || "/admin/pedidos";
+  const rawCallback = sp.get("callbackUrl") || "/admin/pedidos";
+  // Anti open-redirect: só aceita caminhos internos relativos
+  const callbackUrl = rawCallback.startsWith("/") && !rawCallback.startsWith("//") ? rawCallback : "/admin/pedidos";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);

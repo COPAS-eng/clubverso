@@ -20,10 +20,7 @@ export async function POST(_req: NextRequest, { params }: { params: { id: string
     if (err instanceof SoldOutError) {
       return NextResponse.json({ error: "Edição esgotada" }, { status: 409 });
     }
-    console.error(err);
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : "Erro ao confirmar pagamento" },
-      { status: 500 }
-    );
+    console.error("admin confirm fail", err instanceof Error ? err.message : err);
+    return NextResponse.json({ error: "Erro ao confirmar pagamento. Tente novamente." }, { status: 500 });
   }
 }

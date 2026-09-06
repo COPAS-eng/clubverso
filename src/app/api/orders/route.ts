@@ -27,21 +27,15 @@ export async function POST(req: NextRequest) {
     if (err instanceof SoldOutError) {
       return NextResponse.json({ error: "Edição esgotada" }, { status: 409 });
     }
-    console.error(err);
-    const msg = err instanceof Error ? err.message : "Erro ao criar pedido";
+    console.error("order create fail", err instanceof Error ? err.message : err);
+    const msg = err instanceof Error ? err.message : "";
     if (/DATABASE_URL|datasource|Can't reach database|P1001/i.test(msg)) {
-      return NextResponse.json(
-        { error: "Banco indisponível. Confira a DATABASE_URL na Vercel e redeploye." },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: "Serviço indisponível. Tente novamente em instantes." }, { status: 500 });
     }
     if (/PIX_KEY/i.test(msg)) {
-      return NextResponse.json(
-        { error: "PIX não configurado. Confira a PIX_KEY na Vercel e redeploye." },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: "Pagamento indisponível no momento. Tente novamente em instantes." }, { status: 500 });
     }
-    return NextResponse.json({ error: msg }, { status: 500 });
+    return NextResponse.json({ error: "Erro ao criar pedido. Tente novamente." }, { status: 500 });
   }
 }
 export async function GET() { return NextResponse.json({ ok: true }); }
