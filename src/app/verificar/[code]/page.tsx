@@ -3,25 +3,72 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { MOCK_CATALOG } from "@/lib/catalog";
 import { assetPath } from "@/lib/utils";
+import { prisma } from "@/lib/prisma";
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return [{ code: "FLA-2026-DIG-04827" }, { code: "FLA-2026-DIG-00001" }, { code: "PAL-2026-DIG-00001" }];
 }
-export default function VerificarPage({ params }: { params: { code: string } }) {
-  const code = decodeURIComponent(params.code);
-  const m = code.match(/^([A-Z]{2,5})-2026-DIG-(\d{5})$/);
+
+export default async function VerificarPage({ params }: { params: { code: string } }) {
+  const code = decodeURIComponent(params.code).trim().toUpperCase();
+  const m = code.match(/^([A-Z]{2,5})-(\d{4})-DIG-(\d{5})$/);
+
+  let dbEdition: {
+    editionNumber: number;
+    workTitle: string;
+    workVersion: string;
+    maxSupply: number;
+    clubName: string;
+    clubShield: string;
+    clubColor: string;
+  } | null = null;
+  let dbChecked = false;
+
+  if (m) {
+    try {
+      const edition = await prisma.edition.findUnique({
+        where: { editionCode: code },
+        include: { work: { include: { club: true } } },
+      });
+      dbChecked = true;
+      if (edition && ["PAID", "ASSIGNED", "DELIVERED", "GIFTED"].includes(edition.status)) {
+        const club = MOCK_CATALOG.clubs.find((c) => c.shortCode === edition.work.club.shortCode);
+        dbEdition = {
+          editionNumber: edition.editionNumber,
+          workTitle: edition.work.title,
+          workVersion: edition.work.version,
+          maxSupply: edition.work.maxSupply,
+          clubName: edition.work.club.name,
+          clubShield: club?.shield || "/shields/flamengo.png",
+          clubColor: club?.primaryColor || "#C3281E",
+        };
+      }
+    } catch {
+      dbChecked = false;
+    }
+  }
+
   const club = m ? MOCK_CATALOG.clubs.find((c) => c.shortCode === m[1]) || MOCK_CATALOG.clubs[0] : null;
-  const isValid = !!m && !!club;
-  const editionNum = m ? Number(m[2]) : null;
+  // Sem banco: cai no formato. Com banco: só é autêntica se a edição existir e estiver paga.
+  const isValid = m && !!club && (!dbChecked || !!dbEdition);
+  const editionNum = dbEdition ? dbEdition.editionNumber : m ? Number(m[3]) : null;
+  const displayClub = dbEdition
+    ? { name: dbEdition.clubName, shield: dbEdition.clubShield, primaryColor: dbEdition.clubColor }
+    : club;
+  const displayTitle = dbEdition ? dbEdition.workTitle : "Flamengo — 1895–2026";
+  const displayMax = dbEdition ? dbEdition.maxSupply : 10000;
+
   return (
     <div className="mx-auto max-w-xl px-4 py-10">
       <Card className="overflow-hidden">
-        <div className="h-1.5 w-full" style={{ background: club ? club.primaryColor : "#C3281E" }} />
+        <div className="h-1.5 w-full" style={{ background: displayClub ? displayClub.primaryColor : "#C3281E" }} />
         <div className="p-6 text-center">
           {isValid ? (
             <>
               <div className="mx-auto h-16 w-16 rounded-2xl bg-white border shadow flex items-center justify-center p-2">
-                <img src={assetPath(club!.shield)} alt={club!.name} className="h-full w-auto object-contain" />
+                <img src={assetPath(displayClub!.shield)} alt={displayClub!.name} className="h-full w-auto object-contain" />
               </div>
               <Badge className="mt-3 bg-emerald-50 text-emerald-700 border-emerald-200">EDIÇÃO AUTÊNTICA ✓</Badge>
               <h1 className="mt-2 text-2xl font-black tracking-tight" style={{ fontFamily: "var(--font-playfair)" }}>
@@ -32,16 +79,16 @@ export default function VerificarPage({ params }: { params: { code: string } }) 
                 <div className="rounded-xl bg-zinc-50 border p-3">
                   <div className="text-zinc-500 text-xs">Clube</div>
                   <div className="font-bold flex items-center gap-2">
-                    <img src={assetPath(club!.shield)} alt={club!.name} className="h-5 w-auto" /> {club!.name}
+                    <img src={assetPath(displayClub!.shield)} alt={displayClub!.name} className="h-5 w-auto" /> {displayClub!.name}
                   </div>
                 </div>
                 <div className="rounded-xl bg-zinc-50 border p-3">
                   <div className="text-zinc-500 text-xs">Obra</div>
-                  <div className="font-bold">Flamengo — 1895–2026</div>
+                  <div className="font-bold">{displayTitle}</div>
                 </div>
                 <div className="rounded-xl bg-zinc-50 border p-3">
                   <div className="text-zinc-500 text-xs">Edição</div>
-                  <div className="font-black text-lg">#{String(editionNum).padStart(5, "0")} / 10.000</div>
+                  <div className="font-black text-lg">#{String(editionNum).padStart(5, "0")} / {displayMax.toLocaleString("pt-BR")}</div>
                 </div>
                 <div className="rounded-xl bg-zinc-50 border p-3">
                   <div className="text-zinc-500 text-xs">Código</div>
@@ -49,7 +96,7 @@ export default function VerificarPage({ params }: { params: { code: string } }) 
                 </div>
                 <div className="rounded-xl bg-zinc-50 border p-3">
                   <div className="text-zinc-500 text-xs">Versão</div>
-                  <div className="font-mono text-xs">FLA-2026-V1</div>
+                  <div className="font-mono text-xs">{dbEdition ? dbEdition.workVersion : "FLA-2026-V1"}</div>
                 </div>
                 <div className="rounded-xl bg-zinc-50 border p-3">
                   <div className="text-zinc-500 text-xs">Fechamento</div>
@@ -67,7 +114,11 @@ export default function VerificarPage({ params }: { params: { code: string } }) 
             <>
               <Badge className="bg-red-50 text-red-700 border-red-200">NÃO ENCONTRADA</Badge>
               <h1 className="mt-3 text-xl font-bold">Código inválido</h1>
-              <p className="text-sm text-zinc-500 mt-1">Verifique o código: {code}</p>
+              <p className="text-sm text-zinc-500 mt-1">
+                {m
+                  ? `O código ${code} tem formato válido, mas não corresponde a nenhuma edição emitida.`
+                  : `Verifique o código: ${code}`}
+              </p>
             </>
           )}
           <Link href="/" className="mt-6 inline-block text-sm font-semibold underline">
