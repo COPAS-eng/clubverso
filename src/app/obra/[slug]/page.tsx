@@ -107,7 +107,7 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
                 Quero minha edição — {formatBRL(work.priceCents)}
               </Button>
             </Link>
-            <div className="text-center text-xs text-zinc-500">Venda sequencial: após 1 é o 2, depois 3... • 1/10000 • 9.999 disponíveis • PIX estático</div>
+            <div className="text-center text-xs text-zinc-500">Tiragem limitada de 10.000 exemplares • Numeração atribuída após a confirmação • Pagamento via PIX</div>
             <div className="text-center text-xs text-zinc-500">PIX • QR + Copia e Cola • Certificado + QR de autenticidade</div>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-center">

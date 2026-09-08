@@ -106,7 +106,7 @@ export default async function VerificarPage({ params }: { params: { code: string
               <div className="mt-4 p-3 bg-zinc-900 text-white rounded-xl text-xs text-left">
                 <div className="opacity-70">QR aponta para</div>
                 <div className="font-mono">clubverso.com/verificar/{code}</div>
-                <div className="mt-1 opacity-60">NFT: Não emitido • QR nunca aponta direto para PDF ou blockchain</div>
+                <div className="mt-1 opacity-60">QR de verificação da sua edição</div>
               </div>
               <div className="mt-3 text-xs text-zinc-500">Nenhum dado PII exibido (sem CPF/e-mail/telefone). LGPD.</div>
             </>
