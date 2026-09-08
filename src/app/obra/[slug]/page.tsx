@@ -39,6 +39,21 @@ const PAGES = [
 export function generateStaticParams() {
   return [{ slug: "flamengo-1895-2026" }];
 }
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const work = getWork(params.slug);
+  if (!work) return { title: "Obra não encontrada — CLUBEVERSO" };
+  return {
+    title: `${work.title} — HQ digital R$ 49,90 | CLUBEVERSO`,
+    description: `${work.subtitle} 25 páginas ilustradas, edição numerada de 10.000 exemplares, certificado de autenticidade. Entrega digital, pagamento via PIX.`,
+    openGraph: {
+      title: `${work.title} — HQ digital | CLUBEVERSO`,
+      description: "25 páginas • Edição numerada • Certificado • R$ 49,90",
+      type: "website",
+      locale: "pt_BR",
+    },
+  };
+}
 export default function ObraPage({ params }: { params: { slug: string } }) {
   const work = getWork(params.slug);
   if (!work) return <div className="mx-auto max-w-6xl px-4 py-12">Obra não encontrada.</div>;
@@ -88,8 +103,8 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
           </div>
           <div className="mt-4 flex flex-col gap-2">
             <Link href={`/checkout?work=${work.slug}`}>
-              <Button size="lg" className="w-full text-base shine bg-[#C3281E] hover:bg-[#9F1F18]">
-                COMPRAR AGORA • {formatBRL(work.priceCents)} — PIX
+              <Button size="lg" className="w-full text-base shine bg-[#C3281E] hover:bg-[#9F1F18] font-bold">
+                Quero minha edição — {formatBRL(work.priceCents)}
               </Button>
             </Link>
             <div className="text-center text-xs text-zinc-500">Venda sequencial: após 1 é o 2, depois 3... • 1/10000 • 9.999 disponíveis • PIX estático</div>
@@ -122,6 +137,17 @@ export default function ObraPage({ params }: { params: { slug: string } }) {
         <PagesGrid pages={PAGES} clubColor={club.primaryColor} />
         <Card className="mt-4 p-4 bg-amber-50 border-amber-200 text-sm leading-relaxed">
           <b>Princípio editorial:</b> Não é enciclopédia. Conta a história cronológica, emocionante e visualmente premium — origem, eras, ídolos, conquistas, torcida e encerramento autenticado. Sem inventar títulos/jogadores/resultados.
+        </Card>
+        <Card className="mt-4 p-5 text-center bg-zinc-950 text-white border-zinc-950">
+          <div className="text-lg font-black">Garanta sua edição numerada</div>
+          <p className="mt-1 text-sm text-white/70">
+            Tiragem limitada de {work.maxSupply.toLocaleString("pt-BR")} exemplares • Entrega digital • Pagamento via PIX
+          </p>
+          <Link href={`/checkout?work=${work.slug}`} className="mt-4 inline-block w-full sm:w-auto">
+            <Button size="lg" className="w-full sm:w-auto bg-[#C3281E] hover:bg-[#9F1F18] font-bold px-8">
+              Quero minha edição — {formatBRL(work.priceCents)}
+            </Button>
+          </Link>
         </Card>
       </div>
     </div>
