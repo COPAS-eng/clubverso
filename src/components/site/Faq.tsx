@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 const FAQS = [
   {
     q: "O que eu recebo após comprar?",
-    a: "Você recebe a HQ digital de 25 páginas em PDF personalizado com o número da sua edição, além do certificado de autenticidade com QR Code individual para verificação.",
+    a: "Você recebe a HQ digital de 23 páginas em PDF personalizado com o número da sua edição, selo de autenticidade em cada página, além do certificado de autenticidade com QR Code individual para verificação.",
   },
   {
     q: "A HQ é PDF ou acesso online?",

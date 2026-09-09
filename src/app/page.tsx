@@ -32,7 +32,7 @@ const item = {
 };
 
 const BENEFITS = [
-  { icon: BookOpen, t: "HQ premium", d: "25 páginas ilustradas contando a trajetória do clube." },
+  { icon: BookOpen, t: "HQ premium", d: `${MOCK_CATALOG.works[0].totalPages} páginas ilustradas contando a trajetória do clube.` },
   { icon: Hash, t: "Edição numerada", d: "Cada exemplar pertence a uma tiragem limitada de 10.000 unidades." },
   { icon: BadgeCheck, t: "Certificado de autenticidade", d: "Verifique sua edição por meio de um QR Code individual." },
   { icon: TabletSmartphone, t: "Acesso digital", d: "Leia no celular, tablet ou computador." },
@@ -50,6 +50,10 @@ export default function Home() {
   const work = MOCK_CATALOG.works[0];
   const flamengo = MOCK_CATALOG.clubs.find((c) => c.slug === "flamengo")!;
   const futureClubs = MOCK_CATALOG.clubs.filter((c) => c.slug !== "flamengo");
+  const previews = ((work as { previewImageUrls?: string[] }).previewImageUrls ?? []).map((src, i) => ({
+    src,
+    caption: `Página ${i + 1}`,
+  }));
 
   return (
     <div className="overflow-clip">
@@ -71,7 +75,7 @@ export default function Home() {
         <p className="mt-1 text-sm text-zinc-500">
           Prévias reais da HQ — estilo, qualidade e conteúdo antes de comprar.
         </p>
-        <PreviewGallery />
+        <PreviewGallery pages={previews} />
       </section>
 
       {/* BENEFÍCIOS */}

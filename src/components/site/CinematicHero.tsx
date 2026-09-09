@@ -8,7 +8,7 @@ import { MOCK_CATALOG } from "@/lib/catalog";
 import { WorkCover } from "@/components/site/WorkCover";
 
 const SPECS = [
-  { icon: BookOpen, label: "25 páginas ilustradas" },
+  { icon: BookOpen, label: `${MOCK_CATALOG.works[0].totalPages} páginas ilustradas` },
   { icon: BadgeCheck, label: "Edição numerada + certificado" },
   { icon: Smartphone, label: "Celular, tablet e computador" },
   { icon: Mail, label: "Entrega por e-mail" },
@@ -75,7 +75,7 @@ export function CinematicHero() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="mt-5 max-w-xl text-[15px] md:text-base leading-relaxed text-white/75"
           >
-            Uma HQ digital premium com 25 páginas ilustradas, edição numerada e certificado de autenticidade. Leia no
+            Uma HQ digital premium com {work.totalPages} páginas ilustradas, edição numerada e certificado de autenticidade. Leia no
             celular, guarde sua edição e faça parte da primeira tiragem de 10.000 exemplares.
           </motion.p>
 
@@ -143,6 +143,7 @@ export function CinematicHero() {
             clubName={club.name}
             primaryColor={club.primaryColor}
             title={work.title}
+            totalPages={work.totalPages}
           />
         </motion.div>
       </div>

@@ -11,6 +11,7 @@ export function WorkCover({
   clubName,
   primaryColor,
   title,
+  totalPages,
   compact = false,
 }: {
   coverUrl?: string;
@@ -18,6 +19,7 @@ export function WorkCover({
   clubName: string;
   primaryColor: string;
   title: string;
+  totalPages?: number;
   compact?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
@@ -49,7 +51,7 @@ export function WorkCover({
         )}
         <div className="absolute bottom-4 left-4 right-4 flex justify-between text-[10px] tracking-widest text-white/70">
           <span>CLUBEVERSO</span>
-          <span>25 PÁGINAS</span>
+          <span>{totalPages ? `${totalPages} PÁGINAS` : "25 PÁGINAS"}</span>
         </div>
         <motion.div
           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 pointer-events-none"

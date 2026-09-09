@@ -54,24 +54,24 @@ async function main() {
     update: {},
     create: {
       slug: "flamengo-1895-2026", clubId: flamengo.id,
-      title: "Flamengo — 1895–2026", subtitle: "Da origem náutica ao clube do povo. 25 páginas originais.",
+      title: "Flamengo — 1895–2026", subtitle: "Da origem náutica ao clube do povo. 23 páginas originais.",
       description: "Obra HQ premium que conta a evolução do Flamengo desde 1895 até 2026: origem náutica, consolidação no futebol (1911), eras, ídolos, conquistas e torcida. Fechamento editorial em 28/08/2026.",
       periodStart: 1895, periodEnd: 2026, version: "FLA-2026-V1",
       maxSupply: 10000, priceCents: 4990, secondPriceCents: 3990,
       status: "PUBLISHED", editorialClosedAt: new Date("2026-08-28"),
-      totalPages: 25,
+      totalPages: 23,
     },
   });
 
   const pages = [
-    ["Origem", "origem"], ["Primeiros anos","primeiros-anos"], ["Consolidação no futebol","consolidacao-futebol"],
-    ["Primeiros grandes momentos","primeiros-momentos"], ["Crescimento","crescimento"], ["Formação da identidade","formacao-identidade"],
-    ["Primeira grande geração","primeira-geracao"], ["Ascensão","ascensao"], ["Primeiro grande marco","marco-1"],
-    ["Grande conquista","grande-conquista"], ["Era de ouro","era-de-ouro"], ["Transição","transicao"],
-    ["Nova geração","nova-geracao"], ["Reconstrução","reconstrucao"], ["Grande momento moderno","momento-moderno"],
-    ["Capítulo histórico de destaque","capitulo-destaque"], ["Continuidade","continuidade"], ["Nova grande conquista","nova-conquista"],
-    ["Desafios","desafios"], ["Nova fase","nova-fase"], ["Grande momento recente","momento-recente"],
-    ["Ano de fechamento","ano-fechamento"], ["Ídolos e legado","idolos-legado"], ["Torcida, cultura e identidade","torcida-cultura"], ["Encerramento + autenticação","encerramento-autenticacao"],
+    ["Capa — O Mengão em quadrinhos", "capa"], ["A fundação — 1895","fundacao"], ["As cores rubro-negras","cores-rubro-negras"],
+    ["O primeiro grande ídolo","primeiro-idolo"], ["O estádio que vira casa","estadio"], ["A era de ouro dos anos 1940","era-de-ouro-1940"],
+    ["A conquista do primeiro título","primeiro-titulo"], ["O time de 1981","time-1981"], ["Brasileirão 1987","brasileirao-1987"],
+    ["Anos 90 — raça e ídolos","anos-90"], ["Domínio nacional — anos 2000","anos-2000"], ["Década de 2010","decada-2010"],
+    ["2014 — o ano mágico","ano-2014"], ["2015 — o continente é rubro-negro","ano-2015"], ["2016 — a nova geração","ano-2016"],
+    ["2017 — superação e conquistas","ano-2017"], ["2018 — domínio e recorde","ano-2018"], ["2019 — consagração mundial","ano-2019"],
+    ["2020 — resiliência e glórias","ano-2020"], ["2021 — reinvenção e taça","ano-2021"], ["2024 — raça, união e conquista","ano-2024"],
+    ["Símbolos e tradições","simbolos-tradicoes"], ["O futuro é rubro-negro","futuro-rubro-negro"],
   ];
   for (let i = 0; i < pages.length; i++) {
     await prisma.workPage.upsert({

@@ -37,8 +37,13 @@ export default function ClubPage({ params }: { params: { slug: string } }) {
             <Card className="mt-3 overflow-hidden shine group">
               <div className="h-44 flex items-center justify-center text-white relative overflow-hidden" style={{ background: club.primaryColor }}>
                 <div className="absolute inset-0 opacity-15" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-                <img src={assetPath(club.shield)} alt={club.name} className="relative h-20 w-auto bg-white rounded-[12%] p-2 shadow-xl group-hover:scale-[1.03] transition duration-300" />
-                <span className="absolute bottom-3 text-xs tracking-[0.24em] opacity-80">25 PÁGINAS • EDIÇÃO LIMITADA</span>
+                {work.coverImageUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={assetPath(work.coverImageUrl)} alt={`Capa da HQ ${work.title}`} className="relative h-full w-full object-cover object-top group-hover:scale-[1.02] transition duration-300" />
+                ) : (
+                  <img src={assetPath(club.shield)} alt={club.name} className="relative h-20 w-auto bg-white rounded-[12%] p-2 shadow-xl group-hover:scale-[1.03] transition duration-300" />
+                )}
+                <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs tracking-[0.24em] bg-black/55 px-3 py-1 rounded-full backdrop-blur">{work.totalPages} PÁGINAS • EDIÇÃO LIMITADA</span>
               </div>
               <CardContent className="p-4">
                 <div className="font-black">{work.title}</div>

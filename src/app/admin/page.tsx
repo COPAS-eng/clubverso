@@ -28,7 +28,7 @@ export default function AdminPage() {
           <div className="text-sm font-bold">Última edição</div>
           <div className="font-mono text-xs mt-1">FLA-2026-DIG-04827</div>
           <div className="text-xs text-zinc-500 mt-1">Reserva transacional com FOR UPDATE • UNIQUE(workId, editionNumber)</div>
-          <div className="mt-3 text-xs bg-zinc-50 border rounded-xl p-2">8 clubes • 1 obra • 25 páginas cada</div>
+          <div className="mt-3 text-xs bg-zinc-50 border rounded-xl p-2">8 clubes • 1 obra • 23 páginas cada</div>
         </Card>
         <Card className="p-4">
           <div className="text-sm font-bold">Clubes com escudo</div>

@@ -61,10 +61,15 @@ function CheckoutInner() {
 
       <Card className="mt-4 p-4">
         <div className="flex items-center gap-3">
-          <ClubShield src={club.shield} alt={club.name} size={56} primaryColor={club.primaryColor} />
+          {work.coverImageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={work.coverImageUrl} alt={`Capa da HQ ${work.title}`} className="h-20 w-14 rounded-lg object-cover object-top border shadow-sm shrink-0" />
+          ) : (
+            <ClubShield src={club.shield} alt={club.name} size={56} primaryColor={club.primaryColor} />
+          )}
           <div>
             <div className="font-black">{work.title}</div>
-            <div className="text-xs text-zinc-500">HQ digital • 25 páginas • Edição numerada • Certificado</div>
+            <div className="text-xs text-zinc-500">HQ digital • {work.totalPages} páginas • Edição numerada • Certificado</div>
           </div>
         </div>
         <div className="mt-3 border-t pt-3 text-sm space-y-1">
