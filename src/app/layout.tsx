@@ -12,11 +12,11 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 export const metadata: Metadata = {
   title: "CLUBEVERSO — A história do Flamengo como você nunca viu",
   description:
-    "HQ digital premium com 23 páginas ilustradas, edição numerada de 10.000 exemplares e certificado de autenticidade. R$ 49,90, entrega digital, pagamento via PIX.",
+    "HQ digital premium com 25 páginas ilustradas, edição numerada de 10.000 exemplares e certificado de autenticidade. R$ 49,90, entrega digital, pagamento via PIX.",
   openGraph: {
     title: "CLUBEVERSO — A história do Flamengo como você nunca viu",
     description:
-      "HQ digital premium • 23 páginas • Edição numerada • Certificado de autenticidade • R$ 49,90",
+      "HQ digital premium • 25 páginas • Edição numerada • Certificado de autenticidade • R$ 49,90",
     type: "website",
     locale: "pt_BR",
   },

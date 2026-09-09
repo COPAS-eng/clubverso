@@ -54,12 +54,12 @@ async function main() {
     update: {},
     create: {
       slug: "flamengo-1895-2026", clubId: flamengo.id,
-      title: "Flamengo — 1895–2026", subtitle: "Da origem náutica ao clube do povo. 23 páginas originais.",
+      title: "Flamengo — 1895–2026", subtitle: "Da origem náutica ao clube do povo. 25 páginas originais.",
       description: "Obra HQ premium que conta a evolução do Flamengo desde 1895 até 2026: origem náutica, consolidação no futebol (1911), eras, ídolos, conquistas e torcida. Fechamento editorial em 28/08/2026.",
       periodStart: 1895, periodEnd: 2026, version: "FLA-2026-V1",
       maxSupply: 10000, priceCents: 4990, secondPriceCents: 3990,
       status: "PUBLISHED", editorialClosedAt: new Date("2026-08-28"),
-      totalPages: 23,
+      totalPages: 25,
     },
   });
 
@@ -70,8 +70,9 @@ async function main() {
     ["Anos 90 — raça e ídolos","anos-90"], ["Domínio nacional — anos 2000","anos-2000"], ["Década de 2010","decada-2010"],
     ["2014 — o ano mágico","ano-2014"], ["2015 — o continente é rubro-negro","ano-2015"], ["2016 — a nova geração","ano-2016"],
     ["2017 — superação e conquistas","ano-2017"], ["2018 — domínio e recorde","ano-2018"], ["2019 — consagração mundial","ano-2019"],
-    ["2020 — resiliência e glórias","ano-2020"], ["2021 — reinvenção e taça","ano-2021"], ["2024 — raça, união e conquista","ano-2024"],
-    ["Símbolos e tradições","simbolos-tradicoes"], ["O futuro é rubro-negro","futuro-rubro-negro"],
+    ["2020 — resiliência, fé e mais glórias","ano-2020-resiliencia"], ["2021 — reinvenção, superação e mais uma taça","ano-2021-reinvencao"],
+    ["2020 — o desafio de continuar no topo","ano-2020"], ["2021 — uma final que quase virou glória","ano-2021"], ["2024 — raça, união e conquista","ano-2024"],
+    ["Símbolos e tradições","simbolos-tradicoes"], ["Mais que um clube","mais-que-um-clube"], ["O futuro é rubro-negro","futuro-rubro-negro"],
   ];
   for (let i = 0; i < pages.length; i++) {
     await prisma.workPage.upsert({

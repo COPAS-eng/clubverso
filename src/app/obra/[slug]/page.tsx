@@ -28,10 +28,13 @@ const PAGES = [
   "2017 — superação e conquistas",
   "2018 — domínio e recorde",
   "2019 — consagração mundial",
-  "2020 — resiliência e glórias",
-  "2021 — reinvenção e taça",
+  "2020 — resiliência, fé e mais glórias",
+  "2021 — reinvenção, superação e mais uma taça",
+  "2020 — o desafio de continuar no topo",
+  "2021 — uma final que quase virou glória",
   "2024 — raça, união e conquista",
   "Símbolos e tradições",
+  "Mais que um clube",
   "O futuro é rubro-negro + certificado",
 ];
 
